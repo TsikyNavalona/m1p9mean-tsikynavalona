@@ -11,6 +11,8 @@ let initWebRoutes = (app) => {
   router.get("/showCustomerById/:id", CustomerService.showCustomerById);
   router.patch("/updateCustomerById/:id", CustomerService.updateCustomerById);
   router.delete("/deleteCustomerById/:id", CustomerService.deleteCustomerById);
+  router.post("/authenticate", CustomerService.authenticate);
+
   return app.use("/", router);
 };
 

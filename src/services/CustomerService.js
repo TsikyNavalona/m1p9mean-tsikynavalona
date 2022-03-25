@@ -1,5 +1,7 @@
 require("dotenv").config();
 const { encrypt, decrypt } = require("../config/crypto");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 import Customer from "../models/customer";
 
@@ -22,7 +24,10 @@ let addCustomer = async (req, res) => {
     adress: req.body.adress,
   });
   try {
-    customer.password = encrypt(customer.password).content;
+    customer.password = crypto
+      .createHash("sha256")
+      .update(customer.password)
+      .digest("base64");
     const newCustomer = await customer.save();
     res.status(201).json(newCustomer);
   } catch (err) {
@@ -97,6 +102,48 @@ let deleteCustomerById = async (req, res, next) => {
   }
 };
 
+let showCustomerByUserName = (username, callback) => {
+  const query = { username: username };
+  Customer.findOne(query, callback);
+};
+
+let authenticate = (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  showCustomerByUserName(username, (err, customer) => {
+    if (err) throw err;
+    if (!customer) {
+      return res.json({ success: false, msg: "Customer not found" });
+    }
+    try {
+      const hashPwd = crypto
+        .createHash("sha256")
+        .update("123456")
+        .digest("base64");
+      if (hashPwd === customer.password) {
+        const token = jwt.sign({ data: customer }, "secretToken", {});
+        res.json({
+          success: true,
+          token: "JWT " + token,
+          customer: {
+            id: customer._id,
+            name: customer.name,
+            username: customer.username,
+            email: customer.email,
+            number: customer.number,
+            adress: customer.adress,
+          },
+        });
+      } else {
+        return res.json({ success: false, msg: "Wrong password " });
+      }
+    } catch (e) {
+      return res.json({ success: false, msg: "Wrong password or " + e });
+    }
+  });
+};
+
 let register = (req, res, next) => {
   return res.send("Register");
 };
@@ -113,4 +160,5 @@ module.exports = {
   showCustomerById: showCustomerById,
   updateCustomerById: updateCustomerById,
   deleteCustomerById: deleteCustomerById,
+  authenticate: authenticate,
 };
