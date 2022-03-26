@@ -2,6 +2,7 @@ require("dotenv").config();
 const { encrypt, decrypt } = require("../config/crypto");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const passport = require("passport");
 
 import Customer from "../models/customer";
 
@@ -47,6 +48,12 @@ let showCustomerById = async (req, res, next) => {
   }
   res.json(customer);
 };
+
+
+let showCustomerByIdV2 = function(id, callback) {
+  Customer.findById(id, callback);
+};
+
 
 let updateCustomerById = async (req, res, next) => {
   let customer;
@@ -144,6 +151,12 @@ let authenticate = (req, res, next) => {
   });
 };
 
+let checkProfile = (req, res, next) => {
+  console.log(req);
+  return res.json({ customer: req.user });
+};
+
+
 let register = (req, res, next) => {
   return res.send("Register");
 };
@@ -161,4 +174,6 @@ module.exports = {
   updateCustomerById: updateCustomerById,
   deleteCustomerById: deleteCustomerById,
   authenticate: authenticate,
+  checkProfile: checkProfile,
+  showCustomerByIdV2: showCustomerByIdV2
 };
