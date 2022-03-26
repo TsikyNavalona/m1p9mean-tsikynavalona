@@ -27,6 +27,8 @@ db.once("open", () => console.log("Connected to Database"));
 
 require('./config/passport')(passport);
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
+
 let port = 2525;
 
 app.listen(port, () => {

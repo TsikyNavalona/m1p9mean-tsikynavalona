@@ -13,6 +13,7 @@
     "@babel/core": "^7.17.2",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
+    "angular-cli": "^1.0.0-beta.28.3",
     "bcryptjs": "*",
     "body-parser": "^1.19.1",
     "cors": "*",
