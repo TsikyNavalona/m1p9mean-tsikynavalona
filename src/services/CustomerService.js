@@ -9,7 +9,7 @@ import Customer from "../models/customer";
 let showAllCustomer = async (req, res) => {
   try {
     const customers = await Customer.find();
-    res.json(customers);
+    res.json({ status: "200", datas: customers });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -30,7 +30,7 @@ let addCustomer = async (req, res) => {
       .update(customer.password)
       .digest("base64");
     const newCustomer = await customer.save();
-    res.status(201).json(newCustomer);
+    res.json({ status: "200", datas: newCustomer });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -46,14 +46,12 @@ let showCustomerById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  res.json(customer);
+  res.json({ status: "200", datas: customer });
 };
 
-
-let showCustomerByIdV2 = function(id, callback) {
+let showCustomerByIdV2 = function (id, callback) {
   Customer.findById(id, callback);
 };
-
 
 let updateCustomerById = async (req, res, next) => {
   let customer;
@@ -85,7 +83,7 @@ let updateCustomerById = async (req, res, next) => {
   }
   try {
     const updatedCustomer = await customer.save();
-    res.json(updatedCustomer);
+    res.json({ status: "200", datas: updatedCustomer });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -103,7 +101,7 @@ let deleteCustomerById = async (req, res, next) => {
   }
   try {
     await customer.remove();
-    res.json({ message: "Deleted Customer" });
+    res.json({ status: "200", message: "Deleted Customer" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -126,11 +124,12 @@ let authenticate = (req, res, next) => {
     try {
       const hashPwd = crypto
         .createHash("sha256")
-        .update("123456")
+        .update(password)
         .digest("base64");
       if (hashPwd === customer.password) {
         const token = jwt.sign({ data: customer }, "secretToken", {});
         res.json({
+          status: "200",
           success: true,
           token: "JWT " + token,
           customer: {
@@ -156,7 +155,6 @@ let checkProfile = (req, res, next) => {
   return res.json({ customer: req.user });
 };
 
-
 let register = (req, res, next) => {
   return res.send("Register");
 };
@@ -175,5 +173,5 @@ module.exports = {
   deleteCustomerById: deleteCustomerById,
   authenticate: authenticate,
   checkProfile: checkProfile,
-  showCustomerByIdV2: showCustomerByIdV2
+  showCustomerByIdV2: showCustomerByIdV2,
 };

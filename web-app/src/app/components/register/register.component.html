@@ -30,3 +30,9 @@
   <input type="submit" class="btn btn-primary" value="Submit">
 </form>
 </div>
+
+<ul class="collection with-header" style="margin-top:50px;width:50%;margin-left : 240px" *ngFor = "let item of list_customer">
+    <li class="collection-header"><h4>{{item.name}}</h4></li>
+    <li class="collection-item">Lieu : {{item.username}} </li>
+    <li class="collection-item">Numero : {{item.adress}}</li>
+</ul>

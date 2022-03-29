@@ -9,7 +9,7 @@ import Restaurant from "../models/restaurant";
 let showAllRestaurant = async (req, res) => {
   try {
     const restaurants = await Restaurant.find();
-    res.json(restaurants);
+    res.json({ status: "200", datas: restaurants });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -31,7 +31,7 @@ let addRestaurant = async (req, res) => {
       .update(restaurant.password)
       .digest("base64");
     const newRestaurant = await restaurant.save();
-    res.status(201).json(newRestaurant);
+    res.status(201).json({ status: "200", datas: newRestaurant });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -47,7 +47,7 @@ let showRestaurantById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  res.json(restaurant);
+  res.json({ status: "200", datas: restaurant });
 };
 
 let showRestaurantByIdV2 = function (id, callback) {
@@ -87,7 +87,7 @@ let updateRestaurantById = async (req, res, next) => {
   }
   try {
     const updatedRestaurant = await restaurant.save();
-    res.json(updatedRestaurant);
+    res.json({ status: "200", datas: updatedRestaurant });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -105,7 +105,7 @@ let deleteRestaurantById = async (req, res, next) => {
   }
   try {
     await restaurant.remove();
-    res.json({ message: "Deleted Restaurant" });
+    res.json({ status: "200", message: "Deleted Restaurant" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

@@ -9,7 +9,7 @@ import Deliverer from "../models/deliverer";
 let showAllDeliverer = async (req, res) => {
   try {
     const deliverers = await Deliverer.find();
-    res.json(deliverers);
+    res.json({ status: "200", datas: deliverers });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -29,7 +29,7 @@ let addDeliverer = async (req, res) => {
       .update(deliverer.password)
       .digest("base64");
     const newDeliverer = await deliverer.save();
-    res.status(201).json(newDeliverer);
+    res.status(201).json({ status: "200", datas: newDeliverer });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -45,7 +45,7 @@ let showDelivererById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  res.json(deliverer);
+  res.json({ status: "200", datas: deliverer });
 };
 
 let showDelivererByIdV2 = function (id, callback) {
@@ -79,7 +79,7 @@ let updateDelivererById = async (req, res, next) => {
   }
   try {
     const updatedDeliverer = await deliverer.save();
-    res.json(updatedDeliverer);
+    res.json({ status: "200", datas: updatedDeliverer });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -97,7 +97,7 @@ let deleteDelivererById = async (req, res, next) => {
   }
   try {
     await deliverer.remove();
-    res.json({ message: "Deleted deliverer" });
+    res.json({ status: "200", message: "Deleted deliverer" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -125,6 +125,7 @@ let authenticate = (req, res, next) => {
       if (hashPwd === deliverer.password) {
         const token = jwt.sign({ data: deliverer }, "secretToken", {});
         res.json({
+          status: "200",
           success: true,
           token: "JWT " + token,
           customer: {
@@ -152,5 +153,5 @@ module.exports = {
   updateDelivererById: updateDelivererById,
   deleteDelivererById: deleteDelivererById,
   showDelivererByIdV2: showDelivererByIdV2,
-  authenticate: authenticate
+  authenticate: authenticate,
 };
