@@ -35,9 +35,21 @@ export class CustomerService {
     this.authToken = token;
     this.customer = customer;
   }
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
+  }
   logOut() {
     this.authToken = null;
     this.customer = null;
     localStorage.clear();
+  }
+  showProfile() {
+    let httpHeaders = new HttpHeaders();
+    this.loadToken();
+    httpHeaders.append('Content-Type', 'application/json');
+    httpHeaders.append('Accept', 'application/json');
+
+    return this.http.get(base_url + 'checkProfile', { headers: httpHeaders });
   }
 }

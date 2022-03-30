@@ -127,7 +127,7 @@ let authenticate = (req, res, next) => {
         .update(password)
         .digest("base64");
       if (hashPwd === customer.password) {
-        const token = jwt.sign({ data: customer }, "secretToken", {});
+        const token = jwt.sign({ data: customer }, "secretToken", {expiresIn: 604800});
         res.json({
           status: "200",
           success: true,
@@ -152,7 +152,7 @@ let authenticate = (req, res, next) => {
 
 let checkProfile = (req, res, next) => {
   console.log(req);
-  return res.json({ customer: req.user });
+  return res.json({ status: "200", customer: req.user });
 };
 
 let register = (req, res, next) => {

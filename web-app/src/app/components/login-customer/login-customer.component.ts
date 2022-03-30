@@ -28,6 +28,7 @@ export class LoginCustomerComponent implements OnInit {
           response.token,
           response.customer
         );
+        this.router.navigate(['']);
       } else {
       }
     };

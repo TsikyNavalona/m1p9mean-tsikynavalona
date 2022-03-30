@@ -23,7 +23,7 @@ let initWebRoutes = (app) => {
   router.get("/showRestaurantById/:id", RestaurantService.showRestaurantById);
   router.patch("/updateRestaurantById/:id", RestaurantService.updateRestaurantById);
   router.delete("/deleteRestaurantById/:id", RestaurantService.deleteRestaurantById);
-  //router.post("/authenticate", RestaurantService.authenticate);
+  router.post("/authenticateRestaurant", RestaurantService.authenticate);
   //router.get("/checkProfile",passport.authenticate('jwt',{session:false}), RestaurantService.checkProfile);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllDeliverer", DelivererService.showAllDeliverer);

@@ -116,6 +116,45 @@ let showRestaurantByName = (name, callback) => {
   Restaurant.findOne(query, callback);
 };
 
+
+let authenticate = (req, res, next) => {
+  const name = req.body.name;
+  const password = req.body.password;
+
+  showRestaurantByName(name, (err, restaurant) => {
+    if (err) throw err;
+    if (!restaurant) {
+      return res.json({ success: false, msg: "Restaurant not found" });
+    }
+    try {
+      const hashPwd = crypto
+        .createHash("sha256")
+        .update(password)
+        .digest("base64");
+      if (hashPwd === restaurant.password) {
+        const token = jwt.sign({ data: restaurant }, "secretToken", {expiresIn: 604800});
+        res.json({
+          status: "200",
+          success: true,
+          token: "JWT " + token,
+          restaurant: {
+            id: restaurant._id,
+            name: restaurant.name,
+            description: restaurant.description,
+            email: restaurant.email,
+            number: restaurant.number,
+            adress: restaurant.adress,
+            logo: restaurant.logo,
+          },
+        });
+      } else {
+        return res.json({ success: false, msg: "Wrong password " });
+      }
+    } catch (e) {
+      return res.json({ success: false, msg: "Wrong password " });
+    }
+  });
+};
 module.exports = {
   showAllRestaurant: showAllRestaurant,
   addRestaurant: addRestaurant,
@@ -123,4 +162,5 @@ module.exports = {
   updateRestaurantById: updateRestaurantById,
   deleteRestaurantById: deleteRestaurantById,
   showRestaurantByIdV2: showRestaurantByIdV2,
+  authenticate: authenticate
 };

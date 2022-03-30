@@ -9,8 +9,6 @@ module.exports = function (passport) {
   opts.secretOrKey = "secretToken";
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-
-
       CustomerService.showCustomerByIdV2(
         jwt_payload.data._id,
         (err, customer) => {

@@ -123,7 +123,7 @@ let authenticate = (req, res, next) => {
         .update("123456")
         .digest("base64");
       if (hashPwd === deliverer.password) {
-        const token = jwt.sign({ data: deliverer }, "secretToken", {});
+        const token = jwt.sign({ data: deliverer }, "secretToken", {expiresIn: 604800});
         res.json({
           status: "200",
           success: true,
