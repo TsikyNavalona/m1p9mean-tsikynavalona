@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { base_url } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,6 +45,11 @@ export class CustomerService {
     this.authToken = null;
     this.customer = null;
     localStorage.clear();
+  }
+  isTokExpired() {
+    const jwtHelper = new JwtHelperService();
+    this.loadToken();
+    return jwtHelper.isTokenExpired(this.authToken);
   }
   showProfile() {
     let httpHeaders = new HttpHeaders();

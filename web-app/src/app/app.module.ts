@@ -12,6 +12,7 @@ import { LoginCustomerComponent } from './components/login-customer/login-custom
 import { ProfileCustomerComponent } from './components/profile-customer/profile-customer.component';
 
 import { AuthInterceptor } from './config/auth.interceptor';
+import { AuthGuard } from './config/auth.guard';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AuthInterceptor } from './config/auth.interceptor';
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

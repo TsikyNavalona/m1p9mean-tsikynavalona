@@ -43,11 +43,12 @@ app.get("/", (req, res) => {
   res.send("invaild endpoint");
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/index.html'));
-// });
+app.use(express.static(path.join(__dirname, "public")));
+app.all("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
-let port = 2525;
+let port = process.env.PORT || 2525;
 
 app.listen(port, () => {
   console.log("Server started on port " + port);

@@ -5,6 +5,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginCustomerComponent } from './components/login-customer/login-customer.component';
 import { ProfileCustomerComponent } from './components/profile-customer/profile-customer.component';
 
+import { AuthGuard } from './config/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +23,7 @@ const routes: Routes = [
   {
     path: 'profile-customer',
     component: ProfileCustomerComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
