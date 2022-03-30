@@ -1,6 +1,7 @@
 module.exports = {
   // configure the code below with your username, password and mlab database information
-  //database: 'mongodb://<username>:<password>@ds12226.mlab.com:12226/meanauthapp',   //prod
-  database: 'mongodb://localhost:27017/m1p9mean-tsikynavalona',    //dev
+  //database: 'mongodb://localhost:27017/m1p9mean-tsikynavalona',    //dev
+
+  database:'mongodb+srv://tsiky:m1p9mean-tsikynavalona@m1p9mean-tsikynavalona.jplwm.mongodb.net/admin?authSource=admin&replicaSet=atlas-zxs6op-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true'
   //secret: 'yoursecret'
 }
