@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "projet E-kaly",
   "main": "server.js",
+  "engines": {
+    "node": "14.17.0",
+    "npm": "8.5.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/server.js"
