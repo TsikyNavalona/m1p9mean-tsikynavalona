@@ -4,27 +4,27 @@ const config = require("../config/database");
 
 // Customer Schema
 const CustomerSchema = new mongoose.Schema({
-  name: {
+  cName: {
     type: String,
     required: true,
   },
-  username: {
+  cUsername: {
     type: String,
     required: true,
   },
-  password: {
+  cPassword: {
     type: String,
     required: true,
   },
-  number: {
+  cNumber: {
     type: String,
     required: true,
   },
-  email: {
+  cEmail: {
     type: String,
     required: true,
   },
-  adress: {
+  cAdress: {
     type: String,
     required: true,
   },

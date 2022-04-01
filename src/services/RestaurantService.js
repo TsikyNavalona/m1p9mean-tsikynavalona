@@ -17,23 +17,23 @@ let showAllRestaurant = async (req, res) => {
 
 let addRestaurant = async (req, res) => {
   const restaurant = new Restaurant({
-    name: req.body.name,
-    description: req.body.description,
-    password: req.body.password,
-    number: req.body.number,
-    email: req.body.email,
-    adress: req.body.adress,
-    logo: req.body.logo,
+    rName: req.body.rName,
+    rDescription: req.body.rDescription,
+    rPassword: req.body.rPassword,
+    rNumber: req.body.rNumber,
+    rEmail: req.body.rEmail,
+    rAdress: req.body.rAdress,
+    rLogo: req.body.rLogo,
   });
   try {
-    restaurant.password = crypto
+    restaurant.rPassword = crypto
       .createHash("sha256")
-      .update(restaurant.password)
+      .update(restaurant.rPassword)
       .digest("base64");
     const newRestaurant = await restaurant.save();
     res.status(201).json({ status: "200", datas: newRestaurant });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: err });
   }
 };
 
@@ -64,26 +64,26 @@ let updateRestaurantById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  if (req.body.name != null) {
-    restaurant.name = req.body.name;
+  if (req.body.rName != null) {
+    restaurant.rName = req.body.rName;
   }
-  if (req.body.description != null) {
-    restaurant.description = req.body.description;
+  if (req.body.rDescription != null) {
+    restaurant.rDescription = req.body.rDescription;
   }
-  if (req.body.password != null) {
-    restaurant.password = encrypt(req.body.password).content;
+  if (req.body.rPassword != null) {
+    restaurant.rPassword = encrypt(req.body.rPassword).content;
   }
-  if (req.body.number != null) {
-    restaurant.number = req.body.number;
+  if (req.body.rNumber != null) {
+    restaurant.rNumber = req.body.rNumber;
   }
-  if (req.body.email != null) {
-    restaurant.email = req.body.email;
+  if (req.body.rEmail != null) {
+    restaurant.rEmail = req.body.rEmail;
   }
-  if (req.body.adress != null) {
-    restaurant.adress = req.body.adress;
+  if (req.body.rAdress != null) {
+    restaurant.rAdress = req.body.rAdress;
   }
-  if (req.body.logo != null) {
-    restaurant.logo = req.body.logo;
+  if (req.body.rLogo != null) {
+    restaurant.rLogo = req.body.rLogo;
   }
   try {
     const updatedRestaurant = await restaurant.save();
@@ -111,15 +111,15 @@ let deleteRestaurantById = async (req, res, next) => {
   }
 };
 
-let showRestaurantByName = (name, callback) => {
-  const query = { name: name };
+let showRestaurantByName = (rName, callback) => {
+  const query = { rName: rName };
   Restaurant.findOne(query, callback);
 };
 
 
 let authenticate = (req, res, next) => {
-  const name = req.body.name;
-  const password = req.body.password;
+  const name = req.body.rName;
+  const password = req.body.rPassword;
 
   showRestaurantByName(name, (err, restaurant) => {
     if (err) throw err;
@@ -131,7 +131,7 @@ let authenticate = (req, res, next) => {
         .createHash("sha256")
         .update(password)
         .digest("base64");
-      if (hashPwd === restaurant.password) {
+      if (hashPwd === restaurant.rPassword) {
         const token = jwt.sign({ data: restaurant }, "secretToken", {expiresIn: 604800});
         res.json({
           status: "200",
@@ -139,12 +139,12 @@ let authenticate = (req, res, next) => {
           token: "JWT " + token,
           restaurant: {
             id: restaurant._id,
-            name: restaurant.name,
-            description: restaurant.description,
-            email: restaurant.email,
-            number: restaurant.number,
-            adress: restaurant.adress,
-            logo: restaurant.logo,
+            rName: restaurant.rName,
+            rDescription: restaurant.rDescription,
+            rEmail: restaurant.rEmail,
+            rNumber: restaurant.rNumber,
+            rAdress: restaurant.rAdress,
+            rLogo: restaurant.rLogo,
           },
         });
       } else {

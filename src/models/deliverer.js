@@ -1,23 +1,23 @@
 const mongoose = require("mongoose");
 
 const DelivererSchema = new mongoose.Schema({
-  name: {
+  dName: {
     type: String,
     required: true,
   },
-  username: {
+  dUsername: {
     type: String,
     required: true,
   },
-  password: {
+  dPassword: {
     type: String,
     required: true,
   },
-  number: {
+  dNumber: {
     type: String,
     required: true,
   },
-  email: {
+  dEmail: {
     type: String,
     required: true,
   },

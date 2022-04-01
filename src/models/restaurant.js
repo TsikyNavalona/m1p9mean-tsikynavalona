@@ -1,31 +1,31 @@
 const mongoose = require("mongoose");
 
 const RestaurantSchema = new mongoose.Schema({
-  name: {
+  rName: {
     type: String,
     required: true,
   },
-  description: {
+  rDescription: {
     type: String,
     required: true,
   },
-  password: {
+  rPassword: {
     type: String,
     required: true,
   },
-  number: {
+  rNumber: {
     type: String,
     required: true,
   },
-  email: {
+  rEmail: {
     type: String,
     required: true,
   },
-  adress: {
+  rAdress: {
     type: String,
     required: true,
   },
-  logo: {
+  rLogo: {
     type: String,
     required: true,
   },

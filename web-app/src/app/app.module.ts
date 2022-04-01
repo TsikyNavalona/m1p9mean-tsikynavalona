@@ -13,6 +13,8 @@ import { ProfileCustomerComponent } from './components/profile-customer/profile-
 
 import { AuthInterceptor } from './config/auth.interceptor';
 import { AuthGuard } from './config/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,9 @@ import { AuthGuard } from './config/auth.guard';
     RegisterComponent,
     LoginCustomerComponent,
     ProfileCustomerComponent,
+    NavbarComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,

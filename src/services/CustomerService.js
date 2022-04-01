@@ -17,17 +17,17 @@ let showAllCustomer = async (req, res) => {
 
 let addCustomer = async (req, res) => {
   const customer = new Customer({
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-    number: req.body.number,
-    email: req.body.email,
-    adress: req.body.adress,
+    cName: req.body.cName,
+    cUsername: req.body.cUsername,
+    cPassword: req.body.cPassword,
+    cNumber: req.body.cNumber,
+    cEmail: req.body.cEmail,
+    cAdress: req.body.cAdress,
   });
   try {
-    customer.password = crypto
+    customer.cPassword = crypto
       .createHash("sha256")
-      .update(customer.password)
+      .update(customer.cPassword)
       .digest("base64");
     const newCustomer = await customer.save();
     res.json({ status: "200", datas: newCustomer });
@@ -63,23 +63,23 @@ let updateCustomerById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  if (req.body.name != null) {
-    customer.name = req.body.name;
+  if (req.body.cName != null) {
+    customer.cName = req.body.cName;
   }
-  if (req.body.username != null) {
-    customer.username = req.body.username;
+  if (req.body.cUsername != null) {
+    customer.cUsername = req.body.cUsername;
   }
-  if (req.body.password != null) {
-    customer.password = encrypt(req.body.password).content;
+  if (req.body.cPassword != null) {
+    customer.cPassword = encrypt(req.body.cPassword).content;
   }
-  if (req.body.number != null) {
-    customer.number = req.body.number;
+  if (req.body.cNumber != null) {
+    customer.cNumber = req.body.cNumber;
   }
-  if (req.body.email != null) {
-    customer.email = req.body.email;
+  if (req.body.cEmail != null) {
+    customer.cEmail = req.body.cEmail;
   }
-  if (req.body.adress != null) {
-    customer.adress = req.body.adress;
+  if (req.body.cAdress != null) {
+    customer.cAdress = req.body.cAdress;
   }
   try {
     const updatedCustomer = await customer.save();
@@ -107,14 +107,14 @@ let deleteCustomerById = async (req, res, next) => {
   }
 };
 
-let showCustomerByUserName = (username, callback) => {
-  const query = { username: username };
+let showCustomerByUserName = (cUsername, callback) => {
+  const query = { cUsername: cUsername };
   Customer.findOne(query, callback);
 };
 
 let authenticate = (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.cUsername;
+  const password = req.body.cPassword;
 
   showCustomerByUserName(username, (err, customer) => {
     if (err) throw err;
@@ -126,7 +126,7 @@ let authenticate = (req, res, next) => {
         .createHash("sha256")
         .update(password)
         .digest("base64");
-      if (hashPwd === customer.password) {
+      if (hashPwd === customer.cPassword) {
         const token = jwt.sign({ data: customer }, "secretToken", {expiresIn: 604800});
         res.json({
           status: "200",
@@ -134,11 +134,11 @@ let authenticate = (req, res, next) => {
           token: "JWT " + token,
           customer: {
             id: customer._id,
-            name: customer.name,
-            username: customer.username,
-            email: customer.email,
-            number: customer.number,
-            adress: customer.adress,
+            cName: customer.cName,
+            cUsername: customer.cUsername,
+            cEmail: customer.cEmail,
+            cNumber: customer.cNumber,
+            cAdress: customer.cAdress,
           },
         });
       } else {

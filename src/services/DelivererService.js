@@ -17,16 +17,16 @@ let showAllDeliverer = async (req, res) => {
 
 let addDeliverer = async (req, res) => {
   const deliverer = new Deliverer({
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-    number: req.body.number,
-    email: req.body.email,
+    dName: req.body.dName,
+    dUsername: req.body.dUsername,
+    dPassword: req.body.dPassword,
+    dNumber: req.body.dNumber,
+    dEmail: req.body.dEmail,
   });
   try {
-    deliverer.password = crypto
+    deliverer.dPassword = crypto
       .createHash("sha256")
-      .update(deliverer.password)
+      .update(deliverer.dPassword)
       .digest("base64");
     const newDeliverer = await deliverer.save();
     res.status(201).json({ status: "200", datas: newDeliverer });
@@ -62,20 +62,20 @@ let updateDelivererById = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
-  if (req.body.name != null) {
-    deliverer.name = req.body.name;
+  if (req.body.dName != null) {
+    deliverer.dName = req.body.dName;
   }
-  if (req.body.username != null) {
-    deliverer.username = req.body.username;
+  if (req.body.dUsername != null) {
+    deliverer.dUsername = req.body.dUsername;
   }
-  if (req.body.password != null) {
-    deliverer.password = encrypt(req.body.password).content;
+  if (req.body.dPassword != null) {
+    deliverer.dPassword = encrypt(req.body.dPassword).content;
   }
-  if (req.body.number != null) {
-    deliverer.number = req.body.number;
+  if (req.body.dNumber != null) {
+    deliverer.dNumber = req.body.dNumber;
   }
-  if (req.body.email != null) {
-    deliverer.email = req.body.email;
+  if (req.body.dEmail != null) {
+    deliverer.dEmail = req.body.dEmail;
   }
   try {
     const updatedDeliverer = await deliverer.save();
@@ -103,14 +103,14 @@ let deleteDelivererById = async (req, res, next) => {
   }
 };
 
-let showDelivererByUserName = (username, callback) => {
-  const query = { username: username };
+let showDelivererByUserName = (dUsername, callback) => {
+  const query = { dUsername: dUsername };
   Deliverer.findOne(query, callback);
 };
 
 let authenticate = (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const username = req.body.dUsername;
+  const password = req.body.dPassword;
 
   showDelivererByUserName(username, (err, deliverer) => {
     if (err) throw err;
@@ -122,7 +122,7 @@ let authenticate = (req, res, next) => {
         .createHash("sha256")
         .update("123456")
         .digest("base64");
-      if (hashPwd === deliverer.password) {
+      if (hashPwd === deliverer.dPassword) {
         const token = jwt.sign({ data: deliverer }, "secretToken", {expiresIn: 604800});
         res.json({
           status: "200",
@@ -130,11 +130,11 @@ let authenticate = (req, res, next) => {
           token: "JWT " + token,
           customer: {
             id: deliverer._id,
-            name: deliverer.name,
-            username: deliverer.username,
-            email: deliverer.email,
-            number: deliverer.number,
-            adress: deliverer.adress,
+            dName: deliverer.dName,
+            dUsername: deliverer.dUsername,
+            dEmail: deliverer.dEmail,
+            dNumber: deliverer.dNumber,
+            dAdress: deliverer.dAdress,
           },
         });
       } else {

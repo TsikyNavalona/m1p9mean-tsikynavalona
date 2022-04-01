@@ -2,6 +2,7 @@ import express from "express";
 import CustomerService from "../services/CustomerService";
 import RestaurantService from "../services/RestaurantService";
 import DelivererService from "../services/DelivererService";
+import FoodService from "../services/FoodService";
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
@@ -32,6 +33,12 @@ router.get("/showDelivererById/:id", DelivererService.showDelivererById);
 router.patch("/updateDelivererById/:id", DelivererService.updateDelivererById);
 router.delete("/deleteDelivererById/:id", DelivererService.deleteDelivererById);
 router.post("/authenticateDeliverer", DelivererService.authenticate);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get("/showAllFood", FoodService.showAllFood);
+router.post("/addFood", FoodService.addFood);
+router.get("/showAllFoodByRestaurant/:id", FoodService.showAllFoodByRestaurant);
+
+
 
 return app.use("/", router);
 };
