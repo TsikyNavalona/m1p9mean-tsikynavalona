@@ -18,7 +18,7 @@ app.all("/*", (req, res, next) => {
   res.header("Access-Control-Allow-Headers", "*");
   next();
 });
-
+//#1abc9c  #083863
 app.use(
   session({ secret: "secretToken", resave: true, saveUninitialized: true })
 );
