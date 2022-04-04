@@ -2,6 +2,6 @@ export const environment = {
   production: true,
 };
 
-//export const base_url = 'http://localhost:2525/';
+export const base_url = 'http://localhost:8080/';
 
-export const base_url = '';
+//export const base_url = '';

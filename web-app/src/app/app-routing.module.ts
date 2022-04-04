@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginCustomerComponent } from './components/login-customer/login-customer.component';
 import { ProfileCustomerComponent } from './components/profile-customer/profile-customer.component';
+import { ListFoodComponent } from './components/list-food/list-food.component';
 
 import { AuthGuard } from './config/auth.guard';
 
@@ -25,6 +26,11 @@ const routes: Routes = [
     component: ProfileCustomerComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'list-food/:id',
+    component: ListFoodComponent,
+  },
+
 ];
 
 @NgModule({

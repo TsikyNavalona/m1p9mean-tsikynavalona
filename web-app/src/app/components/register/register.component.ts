@@ -8,12 +8,12 @@ import { CustomerService } from '../../services/customer.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  name: string = '';
-  username: string = '';
-  password: string = '';
-  number: string = '';
-  email: string = '';
-  adress: string = '';
+  cName: string = '';
+  cUsername: string = '';
+  cPassword: string = '';
+  cNumber: string = '';
+  cEmail: string = '';
+  cAdress: string = '';
   list_customer: any = [];
   error_msg: string = '';
 
@@ -28,12 +28,12 @@ export class RegisterComponent implements OnInit {
 
   RegisterSubmit() {
     const customer = {
-      name: this.name,
-      username: this.username,
-      password: this.password,
-      number: this.number,
-      email: this.email,
-      adress: this.adress,
+      cName: this.cName,
+      cUsername: this.cUsername,
+      cPassword: this.cPassword,
+      cNumber: this.cNumber,
+      cEmail: this.cEmail,
+      cAdress: this.cAdress,
     };
     const onSuccess = (response: any) => {};
     const onError = (response: any) => {};

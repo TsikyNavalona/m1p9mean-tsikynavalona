@@ -3,21 +3,21 @@
 <div class="main">
   <h1>List of restaurant</h1>
   <ul class="cards">
-    <li class="cards_item" *ngFor="let item of list_restaurant">
+    <li class="cards_item" *ngFor="let item of list_food_res">
       <div class="card">
         <div class="card_image">
           <img src="../../assets/img/food1.jpg" />
         </div>
         <div class="card_content">
-          <h2 class="card_title">{{ item.rName }}</h2>
+          <h2 class="card_title">{{ item.fName }}</h2>
           <p class="card_text">
-            {{ item.rDescription }}
+            {{ item.fDescription }}
           </p>
           <p>
-            {{ item.rAdress }}
+            {{ item.fPrice }}
           </p>
-          <a style="text-decoration:none" routerLink="/list-food/{{ item._id }}">
-            <button class="btn card_btn">show foods</button>
+          <a style="text-decoration: none;">
+            <button class="btn card_btn">Buy</button>
           </a>
         </div>
       </div>

@@ -151,7 +151,6 @@ let authenticate = (req, res, next) => {
 };
 
 let checkProfile = (req, res, next) => {
-  console.log(req);
   return res.json({ status: "200", customer: req.user });
 };
 

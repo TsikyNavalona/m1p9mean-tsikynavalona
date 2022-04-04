@@ -41,7 +41,9 @@ router.get("/showAllFoodByRestaurant/:id", FoodService.showAllFoodByRestaurant);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllOrder", OrderService.showAllOrder);
 router.get("/showAllOrderByCustomer/:id", OrderService.showAllOrderByCustomer);
+router.get("/showSumOrder", OrderService.showSumOrder);
 router.post("/addOrder", OrderService.addOrder);
+
 router.delete("/deleteOrderById/:id", OrderService.deleteOrderById);
 
 

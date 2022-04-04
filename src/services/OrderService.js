@@ -30,6 +30,17 @@ let showAllOrderByCustomer = async (req, res) => {
   }
 };
 
+let showSumOrder = async (req, res) => {
+  try {
+    const order = await Order.aggregate([
+      { $group: { _id: null, fPrice: { $sum: "$allFoodOrdered.oFood.fPrice" } } },
+    ]);
+    res.json({ status: "200", datas: order });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 let addOrder = async (req, res) => {
   const order = new Order({
     allFoodOrdered: req.body.allFoodOrdered,
@@ -46,7 +57,6 @@ let addOrder = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-
 
 let showOrderById = async (req, res, next) => {
   let order;
@@ -79,11 +89,11 @@ let deleteOrderById = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
   showAllOrder: showAllOrder,
   showAllOrderByCustomer: showAllOrderByCustomer,
   addOrder: addOrder,
   deleteOrderById: deleteOrderById,
-  showOrderById: showOrderById
+  showOrderById: showOrderById,
+  showSumOrder: showSumOrder,
 };

@@ -15,6 +15,7 @@ import { AuthInterceptor } from './config/auth.interceptor';
 import { AuthGuard } from './config/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListFoodComponent } from './components/list-food/list-food.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginCustomerComponent,
     ProfileCustomerComponent,
     NavbarComponent,
+    ListFoodComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule],
   providers: [
