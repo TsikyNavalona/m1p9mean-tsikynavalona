@@ -4,6 +4,7 @@ import RestaurantService from "../services/RestaurantService";
 import DelivererService from "../services/DelivererService";
 import FoodService from "../services/FoodService";
 import OrderService from "../services/OrderService";
+import AdminService from "../services/AdminService";
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
@@ -43,9 +44,12 @@ router.get("/showAllOrder", OrderService.showAllOrder);
 router.get("/showAllOrderByCustomer/:id", OrderService.showAllOrderByCustomer);
 router.get("/showSumOrder", OrderService.showSumOrder);
 router.post("/addOrder", OrderService.addOrder);
-
 router.delete("/deleteOrderById/:id", OrderService.deleteOrderById);
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get("/showAllAdmin", AdminService.showAllAdmin);
+router.post("/addAdmin", AdminService.addAdmin);
+router.get("/showAdminById/:id", AdminService.showAdminById);
+router.post("/authenticateAdmin", AdminService.authenticate);
 
 
 

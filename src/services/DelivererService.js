@@ -120,7 +120,7 @@ let authenticate = (req, res, next) => {
     try {
       const hashPwd = crypto
         .createHash("sha256")
-        .update("123456")
+        .update(password)
         .digest("base64");
       if (hashPwd === deliverer.dPassword) {
         const token = jwt.sign({ data: deliverer }, "secretToken", {expiresIn: 604800});
@@ -128,7 +128,7 @@ let authenticate = (req, res, next) => {
           status: "200",
           success: true,
           token: "JWT " + token,
-          customer: {
+          deliverer: {
             id: deliverer._id,
             dName: deliverer.dName,
             dUsername: deliverer.dUsername,

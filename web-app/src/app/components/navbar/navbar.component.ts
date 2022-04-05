@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { CustomerService } from '../../services/customer.service';
 import { RestaurantService } from '../../services/restaurant.service';
+import { DelivererService } from '../../services/deliverer.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,10 +18,20 @@ export class NavbarComponent implements OnInit {
   usernameRestauLog: string = '';
   passwordRestauLog: string = '';
 
+  usernameDelivLog: string = '';
+  passwordDelivLog: string = '';
+
+  usernameAdminLog: string = '';
+  passwordAdminLog: string = '';
+
+  role :string = '';
   error_msg:string = '';
+
   constructor(private elRef: ElementRef,
   private customerService: CustomerService,
   private restaurantService: RestaurantService,
+  private delivererService: DelivererService,
+  private adminService: AdminService,
   private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -45,10 +57,22 @@ export class NavbarComponent implements OnInit {
       this.elRef.nativeElement.querySelector('#modalRegiCustomer').style.display = "none";
     }
   }
+
+  public checkLogIn(): boolean {
+   if (localStorage.getItem("id_token")) {
+     return true
+   } else {
+     return false;
+   };
+ }
   clickedElement: Subscription = new Subscription();
-  ngAfterViewInit() {}
+
 
   ngOnInit(): void {
+    if(localStorage.getItem("admin")  || localStorage.getItem("customer") || localStorage.getItem("restaurant") || localStorage.getItem("deliverer")){
+      this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
+      this.elRef.nativeElement.querySelector('#showCustomerMenu').style.display = "block";
+    }
     var menu = this.elRef.nativeElement.querySelector('.menu-icon span');
     var search = this.elRef.nativeElement.querySelector('.search-icon');
     var cancel = this.elRef.nativeElement.querySelector('.cancel-icon');
@@ -178,7 +202,7 @@ export class NavbarComponent implements OnInit {
           response.token,
           response.customer
         );
-        this.router.navigateByUrl('');
+        this.ngOnInit();
         this.elRef.nativeElement.querySelector('#modalLogCustomer').style.display = "none";
       } else {
           this.error_msg = "Invalid username or password!";
@@ -201,7 +225,7 @@ export class NavbarComponent implements OnInit {
           response.token,
           response.restaurant
         );
-        this.router.navigateByUrl('');
+        this.ngOnInit();
         this.elRef.nativeElement.querySelector('#modalLogRestaur').style.display = "none";
 
       } else {
@@ -211,6 +235,52 @@ export class NavbarComponent implements OnInit {
     const error = (response: any) => {this.error_msg = "Invalid name or password!";};
     this.restaurantService
       .authenticateRestaurant(restaurant)
+      .subscribe(success, error);
+  }
+  LoginDelivSubmit(){
+    const deliverer = {
+      dUsername: this.usernameDelivLog,
+      dPassword: this.passwordDelivLog,
+    };
+    const success = (response: any) => {
+      if (response['status'] == 200) {
+        this.delivererService.storeDelivererData(
+          response.token,
+          response.deliverer
+        );
+        this.ngOnInit();
+        this.elRef.nativeElement.querySelector('#modalLogDeliver').style.display = "none";
+
+      } else {
+          this.error_msg = "Invalid name or password!";
+      }
+    };
+    const error = (response: any) => {this.error_msg = "Invalid name or password! "};
+    this.delivererService
+      .authenticateDeliverer(deliverer)
+      .subscribe(success, error);
+  }
+  LoginAdminSubmit(){
+    const admin = {
+      aUsername: this.usernameAdminLog,
+      aPassword: this.passwordAdminLog,
+    };
+    const success = (response: any) => {
+      if (response['status'] == 200) {
+        this.adminService.storeAdminData(
+          response.token,
+          response.admin
+        );
+        this.ngOnInit();
+        this.elRef.nativeElement.querySelector('#modalLogAdmin').style.display = "none";
+
+      } else {
+          this.error_msg = "Invalid name or password!";
+      }
+    };
+    const error = (response: any) => {this.error_msg = "Invalid name or password! " };
+    this.adminService
+      .authenticateAdmin(admin)
       .subscribe(success, error);
   }
 }

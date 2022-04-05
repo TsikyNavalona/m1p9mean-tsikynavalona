@@ -27,11 +27,11 @@ nav .logo {
 nav .nav-items {
   display: flex;
   flex: 1;
-  padding: 0 0 0 40px;
+  padding: 0 0 0 20px;
 }
 nav .nav-items li {
   list-style: none;
-  padding: 0 15px;
+  padding: 0 10px;
 }
 nav .nav-items li a {
   color: black;

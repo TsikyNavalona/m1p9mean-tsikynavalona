@@ -31,7 +31,8 @@
 
   <div style="" class="nav-items">
     <li><a style="cursor: pointer;" id="showCart"><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">10</span></a></li>
-    <li><a style="cursor: pointer;" id="showChoiceLogin">Sign in</a></li>
+    <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
+    <li id="connectedId"><a style="cursor: pointer; display:none" id="showCustomerMenu">Customer </a></li>
   </div>
 </nav>
 <div style="margin-bottom: 25px;"></div>
@@ -163,19 +164,22 @@
   <div class="modal-content">
   <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Deliverer </span> :</h1>
   <div class="screen-1" style="margin-top:25px">
-    <div class="email">
-      <label for="email">Username</label>
-      <div class="sec-2">
-        <input type="email" name="email" placeholder="Enter your username here!"/>
+    <form class="screen-1" (submit)="LoginDelivSubmit()">
+      <div class="email">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="text" [(ngModel)]="usernameDelivLog" name="usernameDelivLog"  placeholder="Enter your username here!"/>
+        </div>
       </div>
-    </div>
-    <div class="password">
-      <label for="password">Password</label>
-      <div class="sec-2">
-        <input class="pas" type="password" name="password" placeholder="Enter your password here!"/>
+      <div class="password">
+        <label for="password">Password</label>
+        <div class="sec-2">
+          <input class="pas"type="password" [(ngModel)]="passwordDelivLog" name="passwordDelivLog" placeholder="Enter your password here!"/>
+        </div>
       </div>
-    </div>
-    <button class="login">Login</button>
+      <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+      <input class="login" type="submit" value="Login">
+    </form>
   </div>
   </div>
 </div>
@@ -185,19 +189,22 @@
   <div class="modal-content">
     <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Admin </span> :</h1>
     <div class="screen-1" style="margin-top:25px">
-      <div class="email">
-        <label for="email">Username</label>
-        <div class="sec-2">
-          <input type="email" name="email" placeholder="Enter your username here!"/>
+      <form  class="screen-1" (submit)="LoginAdminSubmit()">
+        <div class="email">
+          <label for="email">Username</label>
+          <div class="sec-2">
+            <input type="text"  [(ngModel)]="usernameAdminLog" name="usernameAdminLog"   placeholder="Enter your username here!"/>
+          </div>
         </div>
-      </div>
-      <div class="password">
-        <label for="password">Password</label>
-        <div class="sec-2">
-          <input class="pas" type="password" name="password" placeholder="Enter your password here!"/>
+        <div class="password">
+          <label for="password">Password</label>
+          <div class="sec-2">
+            <input class="pas" type="password"  [(ngModel)]="passwordAdminLog" name="passwordAdminLog" placeholder="Enter your password here!"/>
+          </div>
         </div>
-      </div>
-      <button class="login">Login</button>
+        <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+        <input class="login" type="submit" value="Login">
+      </form>
     </div>
   </div>
 </div>
