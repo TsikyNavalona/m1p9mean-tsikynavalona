@@ -4,30 +4,200 @@
 />
 
 <script type="text/javascript" src="./assets/js/nav.js"></script>
-<nav>
+<nav style="border-bottom: 2px solid rgb(226, 226, 226);">
   <div class="menu-icon">
     <span class="fas fa-bars"></span>
   </div>
   <a style="text-decoration: none;" routerLink="">
     <div class="logo">
-      E - K A L Y
+      <span style="color: #1abc9c; font-style: bold;"> E </span> - K A L Y
     </div>
   </a>
-  <div class="nav-items">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Blogs</a></li>
-    <li><a href="#">Contact</a></li>
-    <li><a href="#">Feedback</a></li>
-  </div>
   <div class="search-icon">
     <span class="fas fa-search"></span>
   </div>
   <div class="cancel-icon">
     <span class="fas fa-times"></span>
   </div>
-  <form action="#">
-    <input type="search" class="search-data" placeholder="Search" required />
+  <form action="#" style="border-radius: 500px;">
+    <input
+      type="search"
+      class="search-data"
+      placeholder="Search Food"
+      required
+    />
     <button type="submit" class="fas fa-search"></button>
   </form>
+
+  <div style="" class="nav-items">
+    <li><a style="cursor: pointer;" id="showCart"><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">10</span></a></li>
+    <li><a style="cursor: pointer;" id="showChoiceLogin">Sign in</a></li>
+  </div>
 </nav>
+<div style="margin-bottom: 25px;"></div>
+
+<div id="modalCard" class="modal">
+  <div class="modal-content">
+    <span style="cursor: pointer;" class="closeCard">&times;</span>
+    <h1>card list</h1>
+  </div>
+</div>
+
+
+<div id="modalLoginChoice" class="modal">
+  <div class="modal-content">
+    <span style="cursor: pointer" class="closeLoginChoice">&times;</span>
+    <h1>Sign in as :</h1>
+    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/nude.png" style="width:30px;margin-right:30px" alt=""><span >Customer</span></div></a>
+    <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/restaurant.png" style="width:30px;margin-right:30px" alt=""><span>Restaurant</span></div></a><br>
+    <a style="cursor: pointer;" id="showLogDeliver" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/delivery-bike.png" style="width:30px;margin-right:30px" alt=""><span>Deliverer</span></div></a><br>
+    <a style="cursor: pointer;" id="showLogAdmin" style="text-decoration: none;margin-bottom:30px"><div class="linkChoice"><img src="../../assets/img/software-engineer.png" style="width:30px;margin-right:30px" alt=""><span>Admin</span></div></a><br>
+  </div>
+</div>
+
+
+<div id="modalLogCustomer" class="modal">
+  <div class="modal-content">
+    <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Customer </span> :</h1>
+    <div class="screen-1" style="margin-top:25px">
+      <form  class="screen-1" (submit)="LoginCustSubmit()">
+        <div class="email">
+          <label for="email">Username</label>
+          <div class="sec-2">
+            <input type="text" [(ngModel)]="usernameCustLog" name="usernameCustLog" placeholder="Enter your username !"/>
+          </div>
+        </div>
+        <div class="password">
+          <label for="password">Password</label>
+          <div class="sec-2">
+            <input class="pas" type="password" [(ngModel)]="passwordCustLog" name="passwordCustLog" placeholder="Enter your password !"/>
+          </div>
+        </div>
+        <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+        <input class="login" type="submit" value="Login">
+      </form>
+      <div class=""><span style="font-size: 0.9em">Don't have an account? Sign up <a style="cursor: pointer;" id="showRegisCustomer">here</a> !</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="modalRegiCustomer" class="modal">
+  <div class="modal-content">
+    <h1 style="margin-top:10px">Register as <span style="color:#1abc9c"> Customer </span> :</h1>
+    <div class="screen-1" style="margin-top:25px">
+
+      <div class="email">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+
+      <div class="email" style="margin-top:6px">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+
+      <div class="email" style="margin-top:6px">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+
+      <div class="email" style="margin-top:6px">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+
+      <div class="email" style="margin-top:6px">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+
+      <div class="password" style="margin-top:6px">
+        <label for="password">Password</label>
+        <div class="sec-2">
+          <input class="pas" type="password" name="password" placeholder="Enter your password here!"/>
+        </div>
+      </div>
+      <button class="login">Register</button>
+      <div class=""><span style="font-size: 0.9em">You have an account? Sign in <a style="cursor: pointer;" id="reshowLogCustomer">here</a> !</span></div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalLogRestaur" class="modal">
+  <div class="modal-content">
+    <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Restaurant </span> :</h1>
+    <div class="screen-1" style="margin-top:25px">
+      <form   class="screen-1" (submit)="LoginRestauSubmit()">
+        <div class="email">
+          <label for="email">Name</label>
+          <div class="sec-2">
+            <input type="text" [(ngModel)]="usernameRestauLog" name="usernameRestauLog"  placeholder="Enter the name of restaurant!"/>
+          </div>
+        </div>
+        <div class="password">
+          <label for="password">Password</label>
+          <div class="sec-2">
+            <input class="pas" type="password" [(ngModel)]="passwordRestauLog" name="passwordRestauLog" placeholder="Enter your password!"/>
+          </div>
+        </div>
+        <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+        <input class="login" type="submit" value="Login">
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalLogDeliver" class="modal">
+  <div class="modal-content">
+  <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Deliverer </span> :</h1>
+  <div class="screen-1" style="margin-top:25px">
+    <div class="email">
+      <label for="email">Username</label>
+      <div class="sec-2">
+        <input type="email" name="email" placeholder="Enter your username here!"/>
+      </div>
+    </div>
+    <div class="password">
+      <label for="password">Password</label>
+      <div class="sec-2">
+        <input class="pas" type="password" name="password" placeholder="Enter your password here!"/>
+      </div>
+    </div>
+    <button class="login">Login</button>
+  </div>
+  </div>
+</div>
+
+
+<div id="modalLogAdmin" class="modal">
+  <div class="modal-content">
+    <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Admin </span> :</h1>
+    <div class="screen-1" style="margin-top:25px">
+      <div class="email">
+        <label for="email">Username</label>
+        <div class="sec-2">
+          <input type="email" name="email" placeholder="Enter your username here!"/>
+        </div>
+      </div>
+      <div class="password">
+        <label for="password">Password</label>
+        <div class="sec-2">
+          <input class="pas" type="password" name="password" placeholder="Enter your password here!"/>
+        </div>
+      </div>
+      <button class="login">Login</button>
+    </div>
+  </div>
+</div>

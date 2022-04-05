@@ -10,7 +10,7 @@ body {
   background: #f2f2f2;
 }
 nav {
-  background: #171c24;
+  background: white;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -19,7 +19,7 @@ nav {
   padding: 0 100px;
 }
 nav .logo {
-  color: #fff;
+  color: black;
   font-size: 30px;
   font-weight: 600;
   letter-spacing: -1px;
@@ -34,44 +34,45 @@ nav .nav-items li {
   padding: 0 15px;
 }
 nav .nav-items li a {
-  color: #fff;
+  color: black;
   font-size: 18px;
   font-weight: 500;
   text-decoration: none;
 }
 nav .nav-items li a:hover {
-  color: #ff3d00;
+  color: #1abc9c;
 }
 nav form {
   display: flex;
   height: 40px;
   padding: 2px;
-  background: #1e232b;
-  min-width: 18% !important;
-  border-radius: 2px;
-  border: 1px solid rgba(155, 155, 155, 0.2);
+  min-width: 58% !important;
 }
 nav form .search-data {
   width: 100%;
   height: 100%;
   padding: 0 10px;
-  color: #fff;
+  color: black;
   font-size: 17px;
   border: none;
   font-weight: 500;
-  background: none;
+  background: rgb(238, 238, 238);
+  border-radius: 500px 0 0 500px;
+  border: 1px solid rgba(155, 155, 155, 0.2);
+  margin-left: 100px;
 }
 nav form button {
   padding: 0 15px;
   color: #fff;
   font-size: 17px;
-  background: #ff3d00;
+  background: #1abc9c;
   border: none;
-  border-radius: 2px;
+  border-radius:  0 500px 500px 0 ;
   cursor: pointer;
+  margin-left: 0px;
 }
 nav form button:hover {
-  background: #e63600;
+  background: #1abc9c;
 }
 nav .menu-icon,
 nav .cancel-icon,
@@ -80,7 +81,7 @@ nav .search-icon {
   text-align: center;
   margin: 0 50px;
   font-size: 18px;
-  color: #fff;
+  color: black;
   cursor: pointer;
   display: none;
 }
@@ -89,14 +90,21 @@ nav .cancel-icon,
 nav .search-icon {
   display: none;
 }
+
 @media (max-width: 1245px) {
   nav {
     padding: 0 50px;
+
+    margin-left: 0px;
   }
 }
 @media (max-width: 1140px) {
   nav {
     padding: 0px;
+    margin-left: 0px;
+  }
+  nav form .search-data {
+    margin-left: 0px;
   }
   nav .logo {
     flex: 2;
@@ -111,7 +119,7 @@ nav .search-icon {
     height: 100%;
     padding: 10px 50px 0 50px;
     text-align: center;
-    background: #14181f;
+    background: white;
     display: inline-block;
     transition: left 0.3s ease;
   }
@@ -121,6 +129,7 @@ nav .search-icon {
   nav .nav-items li {
     line-height: 40px;
     margin: 30px 0;
+
   }
   nav .nav-items li a {
     font-size: 20px;
@@ -132,31 +141,31 @@ nav .search-icon {
     opacity: 0;
     pointer-events: none;
     transition: top 0.3s ease, opacity 0.1s ease;
+
+    margin-left: 0px;
   }
   nav form.active {
-    top: 95px;
+    top: 55px;
     opacity: 1;
     pointer-events: auto;
+    margin-left: 0px;
   }
   nav form:before {
     position: absolute;
     content: "";
-    top: -13px;
     right: 0px;
     width: 0;
     height: 0;
-    z-index: -1;
     border: 10px solid transparent;
-    border-bottom-color: #1e232b;
+    border-bottom-color: rgb(238, 238, 238);
     margin: -20px 0 0;
+    margin-left: 0px;
   }
   nav form:after {
     position: absolute;
-    content: "";
     height: 60px;
     padding: 2px;
-    background: #1e232b;
-    border-radius: 2px;
+    background: rgb(238, 238, 238);
     min-width: calc(100% + 20px);
     z-index: -2;
     left: 50%;
@@ -200,23 +209,9 @@ nav .logo.space {
   color: red;
   padding: 0 5px 0 0;
 }
-@media (max-width: 980px) {
-  nav .menu-icon,
-  nav .cancel-icon,
-  nav .search-icon {
-    margin: 0 20px;
-  }
-  nav form {
-    right: 30px;
-  }
-}
-@media (max-width: 350px) {
-  nav .menu-icon,
-  nav .cancel-icon,
-  nav .search-icon {
-    margin: 0 10px;
-    font-size: 16px;
-  }
+
+nav form {
+  margin-right:80px
 }
 .content {
   position: absolute;
@@ -234,4 +229,192 @@ nav .logo.space {
 }
 .content .space {
   margin: 10px 0;
+}
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 500px; /* Could be more or less, depending on screen size */
+  align-items: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.linkChoice{
+  margin-top:15px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgb(0, 0, 0);
+  background: rgb(238, 238, 238) none repeat scroll 0% 0%;
+  text-decoration: none;
+  padding: 8px 12px;
+  z-index: inherit;
+  border-radius: 500px;
+  -moz-box-align: center;
+  align-items: center;
+  display: flex;
+  width: 200px;
+  cursor: pointer;
+}
+.linkChoice:hover{
+  background: rgb(226, 226, 226) none repeat scroll 0% 0%;
+}
+.screen-1 {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.screen-1 .logo {
+  margin-top: -3em;
+}
+.screen-1 .email {
+  background: white;
+  box-shadow: 0 0 2em #e6e9f9;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  border-radius: 20px;
+  color: #4d4d4d;
+  margin-top: -3em;
+}
+.screen-1 .email input {
+  outline: none;
+  border: none;
+}
+.screen-1 .email input::-moz-placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .email input:-ms-input-placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .email input::placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .email ion-icon {
+  color: #4d4d4d;
+  margin-bottom: -0.2em;
+}
+.screen-1 .password {
+  background: white;
+  box-shadow: 0 0 2em #e6e9f9;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  border-radius: 20px;
+  color: #4d4d4d;
+}
+.screen-1 .password input {
+  outline: none;
+  border: none;
+}
+.screen-1 .password input::-moz-placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .password input:-ms-input-placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .password input::placeholder {
+  color: black;
+  font-size: 0.9em;
+}
+.screen-1 .password ion-icon {
+  color: #4d4d4d;
+  margin-bottom: -0.2em;
+}
+.screen-1 .password .show-hide {
+  margin-right: -5em;
+}
+.screen-1 .login {
+  padding: 1em;
+  background: #1abc9c;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+}
+.screen-1 .footer {
+  display: flex;
+  font-size: 0.7em;
+  color: #5e5e5e;
+  gap: 14em;
+  padding-bottom: 10em;
+}
+.screen-1 .footer span {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+@media (max-width: 980px) {
+  nav .menu-icon,
+  nav .cancel-icon,
+  nav .search-icon {
+    margin: 0 20px;
+  }
+  nav form {
+    right: 30px;
+    margin-right:0px
+  }
+  nav .nav-items{
+    margin-left:0px
+  }
+  .modal-content{
+    width: 90% ;
+  }
+}
+@media (max-width: 350px) {
+  nav .menu-icon,
+  nav .cancel-icon,
+  nav .search-icon {
+    margin: 0 10px;
+    font-size: 16px;
+  }
+  nav .nav-items{
+    margin-left:0px
+  }
+  nav form {
+    right: 30px;
+    margin-right:0px
+  }
+
+  .modal-content{
+    width: 90%;
+  }
 }
