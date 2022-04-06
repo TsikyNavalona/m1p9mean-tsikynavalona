@@ -44,7 +44,11 @@ export class CustomerService {
   logOut() {
     this.authToken = null;
     this.customer = null;
-    localStorage.clear();
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('customer');
+    localStorage.removeItem('restaurant');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('deliverer');
   }
   isTokExpired() {
     const jwtHelper = new JwtHelperService();

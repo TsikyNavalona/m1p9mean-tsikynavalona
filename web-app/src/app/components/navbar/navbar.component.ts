@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, OnInit, ElementRef,HostListener } from '@angular/core';
+import {  AfterViewInit, Component, OnInit,ViewChild, ElementRef,HostListener } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { CustomerService } from '../../services/customer.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { DelivererService } from '../../services/deliverer.service';
 import { AdminService } from '../../services/admin.service';
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements  AfterViewInit {
+
   usernameCustLog: string = '';
   passwordCustLog: string = '';
 
@@ -24,10 +25,19 @@ export class NavbarComponent implements OnInit {
   usernameAdminLog: string = '';
   passwordAdminLog: string = '';
 
+  nameCustReg: string = '';
+  usernameCustReg: string = '';
+  emailCustReg: string = '';
+  numberCustReg: string = '';
+  adressCustReg: string = '';
+  passwordCustReg: string = '';
+
   role :string = '';
   error_msg:string = '';
+  data: any ;
 
   constructor(private elRef: ElementRef,
+  private spinner: NgxSpinnerService,
   private customerService: CustomerService,
   private restaurantService: RestaurantService,
   private delivererService: DelivererService,
@@ -46,7 +56,11 @@ export class NavbarComponent implements OnInit {
     event.target == this.elRef.nativeElement.querySelector('#modalLogRestaur')  ||
     event.target == this.elRef.nativeElement.querySelector('#modalLogDeliver')  ||
     event.target == this.elRef.nativeElement.querySelector('#modalLogAdmin')  ||
-    event.target == this.elRef.nativeElement.querySelector('#modalRegiCustomer')   ) {
+    event.target == this.elRef.nativeElement.querySelector('#modalRegiCustomer')||
+    event.target == this.elRef.nativeElement.querySelector('#modalcustomerMenu') ||
+    event.target == this.elRef.nativeElement.querySelector('#modalrestaurantMenu')||
+    event.target == this.elRef.nativeElement.querySelector('#modaldelivererMenu') ||
+    event.target == this.elRef.nativeElement.querySelector('#modaladminMenu')    ) {
       this.error_msg ='';
       this.elRef.nativeElement.querySelector('#modalCard').style.display = "none";
       this.elRef.nativeElement.querySelector('#modalLoginChoice').style.display = "none";
@@ -55,24 +69,55 @@ export class NavbarComponent implements OnInit {
       this.elRef.nativeElement.querySelector('#modalLogDeliver').style.display = "none";
       this.elRef.nativeElement.querySelector('#modalLogAdmin').style.display = "none";
       this.elRef.nativeElement.querySelector('#modalRegiCustomer').style.display = "none";
+      this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "none";
+      this.elRef.nativeElement.querySelector('#modalrestaurantMenu').style.display = "none";
+      this.elRef.nativeElement.querySelector('#modaldelivererMenu').style.display = "none";
+      this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
+
     }
   }
 
-  public checkLogIn(): boolean {
-   if (localStorage.getItem("id_token")) {
-     return true
+
+  clickedElement: Subscription = new Subscription();
+
+  public checkExistToken(key :string=""):boolean {
+   if (localStorage.getItem(key)) {
+     this.data = JSON.parse(localStorage.getItem(key) || "");
+     //this.data =localSValue.cUsername;
+     //console.log(this.data);
+     this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
+     return true;
    } else {
      return false;
    };
  }
-  clickedElement: Subscription = new Subscription();
-
 
   ngOnInit(): void {
-    if(localStorage.getItem("admin")  || localStorage.getItem("customer") || localStorage.getItem("restaurant") || localStorage.getItem("deliverer")){
+    //this.checkExistToken()
+
+
+
+
+
+  }
+  ngAfterViewInit():void{
+    // if( localStorage.getItem("customer")){
+    //   this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
+    //   this.customer = localStorage.getItem("customer")
+      //  this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showCustomerMenu'), 'click').subscribe(() => {
+      //   this.elRef.nativeElement.querySelector('#modalCustomerMenu').style.display = "block";
+      //   this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+      //   this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+      //   this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+      //   this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+      //   this.elRef.nativeElement.querySelector('form').classList.remove('active');
+      //   this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+      // });
+    // }
+    if(localStorage.getItem("admin")  || localStorage.getItem("restaurant") || localStorage.getItem("deliverer")){
       this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
-      this.elRef.nativeElement.querySelector('#showCustomerMenu').style.display = "block";
     }
+
     var menu = this.elRef.nativeElement.querySelector('.menu-icon span');
     var search = this.elRef.nativeElement.querySelector('.search-icon');
     var cancel = this.elRef.nativeElement.querySelector('.cancel-icon');
@@ -104,6 +149,8 @@ export class NavbarComponent implements OnInit {
 
     var reshowLogCustomer = this.elRef.nativeElement.querySelector('#reshowLogCustomer');
 
+    var modalCustMenu= this.elRef.nativeElement.querySelector('#modalCustMenu');
+    var showCustomerMenu =this.elRef.nativeElement.querySelector('#showCustomerMenu');
 
     this.clickedElement = fromEvent(menu, 'click').subscribe(() => {
       nav.classList.add('active');
@@ -167,6 +214,7 @@ export class NavbarComponent implements OnInit {
       modalLoginChoice.style.display = "none";
       modalRegiCustomer.style.display = "none";
     });
+
     this.clickedElement = fromEvent(showRegisCustomer, 'click').subscribe(() => {
       modalRegiCustomer.style.display = "block";
       modalLogCustomer.style.display = "none";
@@ -187,8 +235,50 @@ export class NavbarComponent implements OnInit {
       modalLoginChoice.style.display = "none";
     });
 
-
-
+    if( this.checkExistToken("customer")){
+      setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showcustomerMenu'), 'click').subscribe(() => {
+       this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "block";
+       this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+       this.elRef.nativeElement.querySelector('form').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+     }),0)
+    }
+    if( this.checkExistToken("restaurant")){
+      setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showrestaurantMenu'), 'click').subscribe(() => {
+       this.elRef.nativeElement.querySelector('#modalrestaurantMenu').style.display = "block";
+       this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+       this.elRef.nativeElement.querySelector('form').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+     }),0)
+    }
+    if( this.checkExistToken("deliverer")){
+      setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showdelivererMenu'), 'click').subscribe(() => {
+       this.elRef.nativeElement.querySelector('#modaldelivererMenu').style.display = "block";
+       this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+       this.elRef.nativeElement.querySelector('form').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+     }),0)
+    }
+    if( this.checkExistToken("admin")){
+      setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showadminMenu'), 'click').subscribe(() => {
+       this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "block";
+       this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+       this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+       this.elRef.nativeElement.querySelector('form').classList.remove('active');
+       this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+     }),0)
+    }
 
   }
   LoginCustSubmit() {
@@ -198,12 +288,20 @@ export class NavbarComponent implements OnInit {
     };
     const success = (response: any) => {
       if (response['status'] == 200) {
+        this.spinner.show();
+
+        setTimeout(() => {
+
+          this.elRef.nativeElement.querySelector('#modalLogCustomer').style.display = "none";
+          this.spinner.hide();
+        }, 5000);
         this.customerService.storeCustomerData(
           response.token,
           response.customer
         );
-        this.ngOnInit();
-        this.elRef.nativeElement.querySelector('#modalLogCustomer').style.display = "none";
+        //this.router.navigate(['']);
+        this.ngAfterViewInit();
+
       } else {
           this.error_msg = "Invalid username or password!";
       }
@@ -225,7 +323,7 @@ export class NavbarComponent implements OnInit {
           response.token,
           response.restaurant
         );
-        this.ngOnInit();
+        this.ngAfterViewInit();
         this.elRef.nativeElement.querySelector('#modalLogRestaur').style.display = "none";
 
       } else {
@@ -248,7 +346,7 @@ export class NavbarComponent implements OnInit {
           response.token,
           response.deliverer
         );
-        this.ngOnInit();
+        this.ngAfterViewInit();
         this.elRef.nativeElement.querySelector('#modalLogDeliver').style.display = "none";
 
       } else {
@@ -271,7 +369,7 @@ export class NavbarComponent implements OnInit {
           response.token,
           response.admin
         );
-        this.ngOnInit();
+        this.ngAfterViewInit();
         this.elRef.nativeElement.querySelector('#modalLogAdmin').style.display = "none";
 
       } else {
@@ -282,5 +380,47 @@ export class NavbarComponent implements OnInit {
     this.adminService
       .authenticateAdmin(admin)
       .subscribe(success, error);
+  }
+
+  onLogoutClick() {
+    this.customerService.logOut();
+    this.router.navigate(['']);
+    this.ngAfterViewInit();
+    this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "none";
+    this.elRef.nativeElement.querySelector('#modalrestaurantMenu').style.display = "none";
+    this.elRef.nativeElement.querySelector('#modaldelivererMenu').style.display = "none";
+    this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
+    this.elRef.nativeElement.querySelector('#connectedId').style.display = "block";
+
+    return false;
+  }
+  RegistCustSubmit(){
+
+      const customer = {
+        cName: this.nameCustReg,
+        cUsername: this.usernameCustReg,
+        cPassword: this.passwordCustReg,
+        cNumber: this.numberCustReg,
+        cEmail: this.emailCustReg,
+        cAdress: this.adressCustReg,
+      };
+      const onSuccess = (response: any) => {};
+      const onError = (response: any) => {};
+      try {
+        if(this.nameCustReg==""|| this.usernameCustReg =="" || this.passwordCustReg =="" || this.numberCustReg =="" || this.emailCustReg =="" || this.adressCustReg ==""){
+          this.error_msg = "Please, complete all fields!";
+        }
+        else{
+          this.customerService.newCustomer(customer).subscribe(onSuccess, onError);
+          this.spinner.show();
+
+          setTimeout(() => {
+            this.elRef.nativeElement.querySelector('#modalRegiCustomer').style.display = "none";
+            this.spinner.hide();
+          }, 2000);
+          this.router.navigate(['/']);
+        }
+
+      } catch (error) {this.error_msg = "Please, complete all fields!";}
   }
 }
