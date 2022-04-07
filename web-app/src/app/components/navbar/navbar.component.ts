@@ -6,12 +6,21 @@ import { CustomerService } from '../../services/customer.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { DelivererService } from '../../services/deliverer.service';
 import { AdminService } from '../../services/admin.service';
+import { SharedService } from '../../services/shared.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements  AfterViewInit {
+
+
+  quantitySrc: Subject<string>;
+  public quantityValueSecond: string = "";
+
+  listCardSrc: Subject<any>;
+  public listCardValueSecond: any;
 
   usernameCustLog: string = '';
   passwordCustLog: string = '';
@@ -36,16 +45,32 @@ export class NavbarComponent implements  AfterViewInit {
   error_msg:string = '';
   data: any ;
 
+  quantityCard :string ='';
+  listCard : any;
+
   constructor(public elRef: ElementRef,
   private spinner: NgxSpinnerService,
   private customerService: CustomerService,
   private restaurantService: RestaurantService,
   private delivererService: DelivererService,
   private adminService: AdminService,
-  private router: Router) {
+  private router: Router,
+  private shared: SharedService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     } ;
+
+    this.quantitySrc = this.shared.quantitySource;
+
+    this.quantitySrc.subscribe(value => {
+      this.quantityValueSecond = value;
+    });
+
+    this.listCardSrc = this.shared.listCardSource;
+
+    this.listCardSrc.subscribe(value => {
+      this.listCardValueSecond = value;
+    });
   }
 
   @HostListener('document:click', ['$event'])
@@ -91,7 +116,14 @@ export class NavbarComponent implements  AfterViewInit {
      return false;
    };
  }
-
+ public checkUserNotCustomer():boolean{
+   if ( localStorage.getItem("admin") || localStorage.getItem("restaurant") || localStorage.getItem("deliverer")) {
+     return false;
+   }
+   else{
+     return true;
+   }
+}
   ngOnInit(): void {
     //this.checkExistToken()
 
@@ -101,6 +133,9 @@ export class NavbarComponent implements  AfterViewInit {
 
   }
   public ngAfterViewInit():void{
+    setTimeout(()=>
+    this.quantityCard = localStorage.getItem("TotalQuantityCart")  || ""
+    ,0);
     // if( localStorage.getItem("customer")){
     //   this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
     //   this.customer = localStorage.getItem("customer")
@@ -175,15 +210,15 @@ export class NavbarComponent implements  AfterViewInit {
       cancel.classList.add('show');
     });
 
-    this.clickedElement = fromEvent(showCart, 'click').subscribe(() => {
-      modalCard.style.display = "block";
-      nav.classList.remove('active');
-      menu.classList.remove('hide');
-      search.classList.remove('hide');
-      cancel.classList.remove('show');
-      form.classList.remove('active');
-      cancel.style.color = '#ff3d00';
-    });
+    // this.clickedElement = fromEvent(showCart, 'click').subscribe(() => {
+    //   modalCard.style.display = "block";
+    //   nav.classList.remove('active');
+    //   menu.classList.remove('hide');
+    //   search.classList.remove('hide');
+    //   cancel.classList.remove('show');
+    //   form.classList.remove('active');
+    //   cancel.style.color = '#ff3d00';
+    // });
 
     this.clickedElement = fromEvent(closeCard, 'click').subscribe(() => {
       modalCard.style.display = "none";
@@ -444,5 +479,22 @@ export class NavbarComponent implements  AfterViewInit {
      this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
      this.elRef.nativeElement.querySelector('form').classList.remove('active');
      this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+  }
+  showCart(){
+    var modalCard = this.elRef.nativeElement.querySelector('#modalCard');
+    modalCard.style.display = "block";
+    this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+    this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+    this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+    this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+    this.elRef.nativeElement.querySelector('form').classList.remove('active');
+    this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+    if(this.listCardValueSecond){
+      console.log("avy shared "+this.listCardValueSecond.length);
+    }
+    else{
+      this.listCard = JSON.parse("["+localStorage.getItem("cardFood")+"]");
+      console.log("avy amin localStorage "+this.listCard.length)
+    }
   }
 }

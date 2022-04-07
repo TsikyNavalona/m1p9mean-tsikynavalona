@@ -17,6 +17,7 @@ import { AuthGuard } from './config/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListFoodComponent } from './components/list-food/list-food.component';
+import { SharedService } from './services/shared.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ListFoodComponent } from './components/list-food/list-food.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
-    NavbarComponent
+    NavbarComponent,
+    SharedService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

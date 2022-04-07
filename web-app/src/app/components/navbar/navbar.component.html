@@ -37,7 +37,7 @@
   </form>
 
   <div style="" class="nav-items">
-    <li><a style="cursor: pointer;" id="showCart"><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">10</span></a></li>
+    <li *ngIf="checkUserNotCustomer()"><a style="cursor: pointer;" (click)="showCart()" ><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">{{ quantityValueSecond || quantityCard || 0}}</span></a></li>
     <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
     <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
     <li *ngIf="checkExistToken('restaurant')" ><a style="cursor: pointer;" id="showrestaurantMenu">{{data.rName}} </a></li>

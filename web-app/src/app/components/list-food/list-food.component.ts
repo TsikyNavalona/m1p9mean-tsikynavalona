@@ -6,6 +6,8 @@ import { CustomerService } from '../../services/customer.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FoodService } from '../../services/food.service';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { SharedService } from '../../services/shared.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-list-food',
@@ -16,6 +18,11 @@ import { NavbarComponent } from '../navbar/navbar.component';
   providedIn: 'root' // just before your class
 })
 export class ListFoodComponent implements AfterViewInit {
+
+
+  quantitySrc: Subject<string>;
+  listCardSrc: Subject<any>;
+
   idRestaurant = '';
   restaurant: any;
   list_food_res: any = [];
@@ -62,8 +69,12 @@ onDocumentClick(event: MouseEvent) {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private restaurantService: RestaurantService,
-    private foodService: FoodService
-  ) {}
+    private foodService: FoodService,
+    private shared: SharedService
+  ) {
+    this.quantitySrc = this.shared.quantitySource;
+    this.listCardSrc = this.shared.listCardSource;
+  }
 
   ngAfterViewInit(): void {
   //   console.log(this.buttonTag.length);
@@ -174,11 +185,14 @@ onDocumentClick(event: MouseEvent) {
     var newOrder = '{"oFood" :"'+idFood+'", "quantitiy" :"'+quantity+'"}'
     var totalOrder = priceFood*quantity;
     if(!localStorage.getItem("cardFood")){
+      localStorage.setItem('TotalQuantityCart',String(quantity));
       localStorage.setItem('cardFood', newOrder);
       console.log("vaovao "+ localStorage.getItem("cardFood"));
     }else{
       var oldOrder = localStorage.getItem("cardFood");
+      var oldQuantity = parseInt(localStorage.getItem("TotalQuantityCart") || "") ;
       localStorage.setItem('cardFood',oldOrder+","+newOrder);
+      localStorage.setItem('TotalQuantityCart',String(oldQuantity+quantity) );
       console.log("efa nisy "+ localStorage.getItem("cardFood"));
       var array =JSON.parse("["+localStorage.getItem("cardFood")+"]") ;
       //if connect zay vo afaka miajouter panier
@@ -186,8 +200,16 @@ onDocumentClick(event: MouseEvent) {
       //console.log(result);
       //console.log(JSON.parse("["+localStorage.getItem("cardFood")+"]") );
     }
+      this.navBar.quantityCard = localStorage.getItem("TotalQuantityCart")  || "";
+
+      this.quantity=1;
+      this.i =1;
+      //this.reloadCurrentRoute()
+      //this.router.navigate(['']);
       var modalFoodCommand = this.elRef.nativeElement.querySelector('#modalFoodCommand');
       modalFoodCommand.style.display = "none";
+      this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
+      this.shared.changeCardSource(JSON.parse("["+localStorage.getItem("cardFood")+"]") );
   }
 
   LoginCustSubmit() {
@@ -208,7 +230,6 @@ onDocumentClick(event: MouseEvent) {
           response.token,
           response.customer
         );
-
         //this.router.navigate(['nav-bar']);
         //this.router.navigate(['']);
         //this.ngAfterViewInit();
@@ -231,5 +252,11 @@ onDocumentClick(event: MouseEvent) {
     this.customerService
       .authenticateCustomer(customer)
       .subscribe(success, error);
+  }
+  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
   }
 }
