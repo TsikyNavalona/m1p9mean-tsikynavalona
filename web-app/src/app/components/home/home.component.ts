@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../services/customer.service';
 import { Router } from '@angular/router';
+import {Meta ,Title} from "@angular/platform-browser";
 import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
@@ -14,10 +15,13 @@ export class HomeComponent implements OnInit {
   list_restaurant: any = [];
 
   constructor(
+    private titleService:Title,
     private customerService: CustomerService,
     private router: Router,
     private restaurantService: RestaurantService
-  ) {}
+  ) {
+    this.titleService.setTitle("E-kaly : Home Page");
+  }
 
   ngOnInit(): void {
     this.showAllRestaurant();
@@ -30,10 +34,8 @@ export class HomeComponent implements OnInit {
 
   showAllRestaurant() {
     const success = (response: any) => {
-      console.log(response['status']);
       if (response['status'] == 200) {
         this.list_restaurant = response['datas'];
-        console.log(this.list_restaurant);
         this.list_restaurant = this.list_restaurant.map((item: any) => {
           item.show = true;
           return item;

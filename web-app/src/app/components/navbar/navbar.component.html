@@ -5,6 +5,7 @@
 <ngx-spinner
   bdColor="rgba(255,255,255,0.97)"
   template="<img src='../../assets/img/giphy.gif'  style='width:150px' />"
+  type="ball-8bits"
 >
 <p style="color: black;margin-top:60px;font-weight:bold;font-size:17px" > Loading... </p>
 </ngx-spinner>
@@ -38,7 +39,7 @@
   <div style="" class="nav-items">
     <li><a style="cursor: pointer;" id="showCart"><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">10</span></a></li>
     <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
-    <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" id="showcustomerMenu">{{data.cUsername}} </a></li>
+    <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
     <li *ngIf="checkExistToken('restaurant')" ><a style="cursor: pointer;" id="showrestaurantMenu">{{data.rName}} </a></li>
     <li *ngIf="checkExistToken('deliverer')" ><a style="cursor: pointer;" id="showdelivererMenu">{{data.dUsername}} </a></li>
     <li *ngIf="checkExistToken('admin')" ><a style="cursor: pointer;" id="showadminMenu">{{data.aUsername}} </a></li>

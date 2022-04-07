@@ -5,10 +5,12 @@
   <ul class="cards">
     <li class="cards_item" *ngFor="let item of list_restaurant">
       <div class="card">
-        <div class="card_image">
-          <img src="../../assets/img/food1.jpg" />
+        <div style="margin:0" class="card_image">
+          <img src="../../assets/img/restoLogo.png" style="width:200px;height:200px;" />
+           <div class="restoName">{{ item.rName }}</div>
         </div>
-        <div class="card_content">
+        <hr>
+        <div  class="card_content">
           <h2 class="card_title">{{ item.rName }}</h2>
           <p class="card_text">
             {{ item.rDescription }}

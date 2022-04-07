@@ -38,6 +38,7 @@ router.post("/authenticateDeliverer", DelivererService.authenticate);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllFood", FoodService.showAllFood);
 router.post("/addFood", FoodService.addFood);
+router.get("/showFoodById/:id", FoodService.showFoodById);
 router.get("/showAllFoodByRestaurant/:id", FoodService.showAllFoodByRestaurant);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllOrder", OrderService.showAllOrder);

@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginCustomerComponent } from './components/login-customer/login-customer.component';
 import { ProfileCustomerComponent } from './components/profile-customer/profile-customer.component';
 import { ListFoodComponent } from './components/list-food/list-food.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { AuthGuard } from './config/auth.guard';
 
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'list-food/:id',
     component: ListFoodComponent,
+  },
+  {
+    path: 'nav-bar',
+    component: NavbarComponent,
   },
 
 ];

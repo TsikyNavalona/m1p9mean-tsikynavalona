@@ -36,7 +36,7 @@ export class NavbarComponent implements  AfterViewInit {
   error_msg:string = '';
   data: any ;
 
-  constructor(private elRef: ElementRef,
+  constructor(public elRef: ElementRef,
   private spinner: NgxSpinnerService,
   private customerService: CustomerService,
   private restaurantService: RestaurantService,
@@ -100,7 +100,7 @@ export class NavbarComponent implements  AfterViewInit {
 
 
   }
-  ngAfterViewInit():void{
+  public ngAfterViewInit():void{
     // if( localStorage.getItem("customer")){
     //   this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
     //   this.customer = localStorage.getItem("customer")
@@ -236,15 +236,15 @@ export class NavbarComponent implements  AfterViewInit {
     });
 
     if( this.checkExistToken("customer")){
-      setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showcustomerMenu'), 'click').subscribe(() => {
-       this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "block";
-       this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
-       this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
-       this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
-       this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
-       this.elRef.nativeElement.querySelector('form').classList.remove('active');
-       this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
-     }),0)
+     //  setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showcustomerMenu'), 'click').subscribe(() => {
+     //   this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "block";
+     //   this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+     //   this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+     //   this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+     //   this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+     //   this.elRef.nativeElement.querySelector('form').classList.remove('active');
+     //   this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+     // }),0)
     }
     if( this.checkExistToken("restaurant")){
       setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showrestaurantMenu'), 'click').subscribe(() => {
@@ -281,6 +281,18 @@ export class NavbarComponent implements  AfterViewInit {
     }
 
   }
+
+  // test(){
+  //   setTimeout(()=>this.clickedElement =  fromEvent(this.elRef.nativeElement.querySelector('#showcustomerMenu'), 'click').subscribe(() => {
+  //    this.elRef.nativeElement.querySelector('#modalcustomerMenu').style.display = "block";
+  //    this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+  //    this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+  //    this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+  //    this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+  //    this.elRef.nativeElement.querySelector('form').classList.remove('active');
+  //    this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+  //  }),0)
+  // }
   LoginCustSubmit() {
     const customer = {
       cUsername: this.usernameCustLog,
@@ -413,7 +425,7 @@ export class NavbarComponent implements  AfterViewInit {
         else{
           this.customerService.newCustomer(customer).subscribe(onSuccess, onError);
           this.spinner.show();
-
+          this.error_msg = "";
           setTimeout(() => {
             this.elRef.nativeElement.querySelector('#modalRegiCustomer').style.display = "none";
             this.spinner.hide();
@@ -422,5 +434,15 @@ export class NavbarComponent implements  AfterViewInit {
         }
 
       } catch (error) {this.error_msg = "Please, complete all fields!";}
+  }
+  showcustomerMenu(){
+    var modalcustomerMenu = this.elRef.nativeElement.querySelector('#modalcustomerMenu');
+    modalcustomerMenu.style.display = "block";
+    this.elRef.nativeElement.querySelector('.nav-items').classList.remove('active');
+     this.elRef.nativeElement.querySelector('.menu-icon span').classList.remove('hide');
+     this.elRef.nativeElement.querySelector('.search-icon').classList.remove('hide');
+     this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
+     this.elRef.nativeElement.querySelector('form').classList.remove('active');
+     this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
   }
 }

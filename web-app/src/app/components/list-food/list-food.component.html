@@ -1,26 +1,84 @@
 <!-- <a class="nav-link" (click)="onLogoutClick()" href="#">Logout</a> -->
 
 <div class="main">
-  <h1>List of restaurant</h1>
+
+  <h1  *ngIf="restaurant">List of Food at <span style="color:#1abc9c"> {{ restaurant.rName }}</span>   </h1>
   <ul class="cards">
-    <li class="cards_item" *ngFor="let item of list_food_res">
+    <li class="cards_item" *ngFor="let item of list_food_res; let i = index">
       <div class="card">
-        <div class="card_image">
-          <img src="../../assets/img/food1.jpg" />
+        <div  style="margin:0" class="card_image">
+          <img src="../../assets/img/foodLogo.png"  style="width:200px;height:200px;"/>
+           <div class="restoName">{{ item.fName }}</div>
         </div>
+        <hr>
         <div class="card_content">
-          <h2 class="card_title">{{ item.fName }}</h2>
-          <p class="card_text">
-            {{ item.fDescription }}
-          </p>
-          <p>
-            {{ item.fPrice }}
-          </p>
-          <a style="text-decoration: none;">
-            <button class="btn card_btn">Buy</button>
+          <h4 style="text-align: center;">
+            Price : {{ item.fPrice | number: '.0' }} Ar
+          </h4>
+          <a  style="text-decoration: none;">
+            <button (click)="showFoodCommand(item._id)"  class="btn card_btn">Buy</button>
           </a>
         </div>
       </div>
     </li>
   </ul>
+
+
+  <div  id="modalFoodCommand" class="modal">
+    <div *ngIf="foodSelected" class="modal-content">
+      <img src="../../assets/img/foodLogo.png" />
+       <div class="foodName">{{ foodSelected.fName }}</div>
+      <div style="height:1px;background-color:black;width:100%;opacity: .25;">
+
+      </div>
+      <h3 style="margin-top:50px">
+        Description: {{ foodSelected.fDescription }}
+      </h3>
+      <h3>
+        Unit price: {{ foodSelected.fPrice | number: '.0' }} Ar
+      </h3>
+
+      <div class="" style="display: inline;">
+        <img  (click)="minus()" style="width:30px;height:30px;display: inline;" class="imgPlusMinus" src="../../assets/img/remove.png" alt="">
+        <p style="font-weight:bold;display: inline;margin-left:25px;margin-right:28px;"> {{quantity}}</p>
+        <img (click)="plus()" style="width:30px;height:30px;display: inline;" class="imgPlusMinus" src="../../assets/img/plus.png" alt="">
+      </div>
+      <button   (click)="addFoodToCard(foodSelected._id,foodSelected.fPrice,quantity)" style="display: inline;margin-top:25px" class="btn card_btn">
+        <p style="display: inline;;margin-right:48px;">Add {{quantity}} to cart</p>
+        <p style="display: inline"> total : {{quantity*foodSelected.fPrice | number: '.0' }} Ar</p>
+      </button>
+    </div>
+  </div>
+
+  <div  id="modalNotAccess" class="modal">
+    <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);margin:auto" class="modal-content">
+      <h1>Only the <span  style="color:#1abc9c">customer</span>  can buy food</h1>
+    </div>
+  </div>
+
+
+  <div id="modalLogCustomer" class="modal">
+    <div class="modal-content">
+      <h1 style="margin-top:10px">Sign in as <span style="color:#1abc9c"> Customer </span> :</h1>
+      <div class="screen-1" style="margin-top:25px">
+        <form  class="screen-1" (submit)="LoginCustSubmit()">
+          <div class="email">
+            <label for="email">Username</label>
+            <div class="sec-2">
+              <input type="text" [(ngModel)]="usernameCustLog" name="usernameCustLog" placeholder="Enter your username !"/>
+            </div>
+          </div>
+          <div class="password">
+            <label for="password">Password</label>
+            <div class="sec-2">
+              <input class="pas" type="password" [(ngModel)]="passwordCustLog" name="passwordCustLog" placeholder="Enter your password !"/>
+            </div>
+          </div>
+          <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+          <input class="login" type="submit" value="Login">
+        </form>
+      </div>
+    </div>
+  </div>
+
 </div>

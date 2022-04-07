@@ -1,5 +1,6 @@
 /* Font */
 @import url("https://fonts.googleapis.com/css?family=Quicksand:400,700");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
 
 /* Design */
 *,
@@ -39,7 +40,7 @@ img {
 }
 
 .btn {
-  color: white;
+  color: #1abc9c;
   padding: 0.8rem;
   font-size: 14px;
   text-transform: uppercase;
@@ -48,12 +49,12 @@ img {
   display: block;
   width: 100%;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: black;
+  border: 1px solid #1abc9c;
+  background: white;
 }
 
 .btn:hover {
-  background-color: grey;
+  background-color: #1abc9c;
   color: white;
 }
 
@@ -67,11 +68,15 @@ img {
 
 .cards_item {
   display: flex;
-  padding: 1rem;
+  padding: 4rem;
 }
 
 @media (min-width: 40rem) {
   .cards_item {
+    width: 50%;
+    padding: 4.5rem;
+  }
+  .card{
     width: 50%;
   }
 }
@@ -79,16 +84,54 @@ img {
 @media (min-width: 56rem) {
   .cards_item {
     width: 33.3333%;
+    padding: 4.5rem;
+
+  }
+  .card{
+    width: 50%;
+  }
+}
+/* @media (max-width: 1245px) {
+  .cards_item {
+    width: 33.3333%;
+    padding: 4.5rem;
+
+  }
+}
+@media (max-width: 1140px) {
+  .cards_item {
+    width: 33.3333%;
+    padding: 4.5rem;
+
   }
 }
 
+@media (max-width: 980px) {
+  .cards_item {
+    width: 33.3333%;
+    padding: 4.5rem;
+
+  }
+}
+@media (max-width: 350px) {
+  .cards_item {
+    width: 33.3333%;
+    padding: 2.5rem;
+
+  }
+} */
+
+
+
+
 .card {
-  background-color: white;
+background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 250px;
 }
 
 .card_content {
@@ -110,4 +153,21 @@ img {
   line-height: 1.5;
   margin-bottom: 1.25rem;
   font-weight: 400;
+}
+.card_image{
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+
+.restoName{
+  font-family: 'Poppins', sans-serif;
+  font-size:20px;
+  color:#1abc9c ;
+  font-weight: bold;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

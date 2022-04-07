@@ -15,4 +15,7 @@ export class FoodService {
   showAllFoodByRestaurant(id: any) {
     return this.http.get(base_url + 'showAllFoodByRestaurant/' + id);
   }
+  showFoodById(id: any){
+    return this.http.get(base_url + 'showFoodById/' + id);
+  }
 }
