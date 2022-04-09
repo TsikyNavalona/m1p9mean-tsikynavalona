@@ -40,6 +40,7 @@ router.get("/showAllFood", FoodService.showAllFood);
 router.post("/addFood", FoodService.addFood);
 router.get("/showFoodById/:id", FoodService.showFoodById);
 router.get("/showAllFoodByRestaurant/:id", FoodService.showAllFoodByRestaurant);
+router.get("/showFoodByListId/:id", FoodService.showFoodByListId);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllOrder", OrderService.showAllOrder);
 router.get("/showAllOrderByCustomer/:id", OrderService.showAllOrderByCustomer);

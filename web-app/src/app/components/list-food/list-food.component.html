@@ -38,12 +38,13 @@
         Unit price: {{ foodSelected.fPrice | number: '.0' }} Ar
       </h3>
 
+
       <div class="" style="display: inline;">
         <img  (click)="minus()" style="width:30px;height:30px;display: inline;" class="imgPlusMinus" src="../../assets/img/remove.png" alt="">
         <p style="font-weight:bold;display: inline;margin-left:25px;margin-right:28px;"> {{quantity}}</p>
         <img (click)="plus()" style="width:30px;height:30px;display: inline;" class="imgPlusMinus" src="../../assets/img/plus.png" alt="">
       </div>
-      <button   (click)="addFoodToCard(foodSelected._id,foodSelected.fPrice,quantity)" style="display: inline;margin-top:25px" class="btn card_btn">
+      <button   (click)="addFoodToCard(foodSelected._id,foodSelected.fPrice,quantity,foodSelected.fName,foodSelected.fRestaurant._id )" style="display: inline;margin-top:25px" class="btn card_btn">
         <p style="display: inline;;margin-right:48px;">Add {{quantity}} to cart</p>
         <p style="display: inline"> total : {{quantity*foodSelected.fPrice | number: '.0' }} Ar</p>
       </button>
@@ -78,6 +79,12 @@
           <input class="login" type="submit" value="Login">
         </form>
       </div>
+    </div>
+  </div>
+
+  <div id="differentResto" class="modal">
+    <div class="modal-content">
+      <h1>Sorry , you can't order from two different restaurants</h1>
     </div>
   </div>
 

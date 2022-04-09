@@ -18,4 +18,8 @@ export class FoodService {
   showFoodById(id: any){
     return this.http.get(base_url + 'showFoodById/' + id);
   }
+  showFoodByListId(listId:any){
+    return this.http.get(base_url + 'showFoodByListId/' + listId);
+  }
+  
 }

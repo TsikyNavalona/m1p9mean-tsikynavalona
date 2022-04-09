@@ -22,6 +22,7 @@ export class ListFoodComponent implements AfterViewInit {
 
   quantitySrc: Subject<string>;
   listCardSrc: Subject<any>;
+  totalAmountSrc: Subject<string>;
 
   idRestaurant = '';
   restaurant: any;
@@ -52,13 +53,17 @@ export class ListFoodComponent implements AfterViewInit {
 onDocumentClick(event: MouseEvent) {
   if (event.target == this.elRef.nativeElement.querySelector('#modalFoodCommand') ||
       event.target == this.elRef.nativeElement.querySelector('#modalNotAccess') ||
-      event.target == this.elRef.nativeElement.querySelector('#modalLogCustomer')
+      event.target == this.elRef.nativeElement.querySelector('#modalLogCustomer') ||
+      event.target == this.elRef.nativeElement.querySelector('#differentResto')
     ) {
     this.quantity =1;
     this.i=1;
+    this.foodSelected = null;
     this.elRef.nativeElement.querySelector('#modalFoodCommand').style.display = "none";
     this.elRef.nativeElement.querySelector('#modalNotAccess').style.display = "none";
     this.elRef.nativeElement.querySelector('#modalLogCustomer').style.display = "none";
+    this.elRef.nativeElement.querySelector('#differentResto').style.display = "none";
+
   }
 }
   constructor(
@@ -73,6 +78,7 @@ onDocumentClick(event: MouseEvent) {
     private shared: SharedService
   ) {
     this.quantitySrc = this.shared.quantitySource;
+    this.totalAmountSrc = this.shared.amountTotalSource;
     this.listCardSrc = this.shared.listCardSource;
   }
 
@@ -179,37 +185,63 @@ onDocumentClick(event: MouseEvent) {
       this.quantity=this.i;
     }
   }
-  addFoodToCard(idFood:string,priceFood:any,quantity:number ){
+  addFoodToCard(idFood:string,priceFood:any,quantity:number,fName:string,restaurantId:string){
 
-    console.log(idFood + " " + priceFood + " " + quantity);
-    var newOrder = '{"oFood" :"'+idFood+'", "quantitiy" :"'+quantity+'"}'
+    var newOrder = '{"oFood" :"'+idFood+'", "quantity" :"'+quantity+'" , "fName":"'+fName+'" , "fPrice":"'+priceFood+'" , "idRestaurant":"'+restaurantId+'"}'
     var totalOrder = priceFood*quantity;
     if(!localStorage.getItem("cardFood")){
       localStorage.setItem('TotalQuantityCart',String(quantity));
-      localStorage.setItem('cardFood', newOrder);
-      console.log("vaovao "+ localStorage.getItem("cardFood"));
+      localStorage.setItem('AmountTotal',String(totalOrder));
+      localStorage.setItem('cardFood', "["+newOrder+"]");
+      this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
+      this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+      this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
     }else{
-      var oldOrder = localStorage.getItem("cardFood");
       var oldQuantity = parseInt(localStorage.getItem("TotalQuantityCart") || "") ;
-      localStorage.setItem('cardFood',oldOrder+","+newOrder);
-      localStorage.setItem('TotalQuantityCart',String(oldQuantity+quantity) );
-      console.log("efa nisy "+ localStorage.getItem("cardFood"));
-      var array =JSON.parse("["+localStorage.getItem("cardFood")+"]") ;
-      //if connect zay vo afaka miajouter panier
-      //var result = array.filter(function(el:any){return el.oFood == "6246f8377ee07dad10c613e3"}).quantitiy
-      //console.log(result);
-      //console.log(JSON.parse("["+localStorage.getItem("cardFood")+"]") );
+      var oldAmountTotal = parseInt(localStorage.getItem("AmountTotal") || "") ;
+      var oldOrder = localStorage.getItem("cardFood");
+      if(oldOrder && oldOrder.includes(restaurantId)){
+        console.log("resto mitovy");
+
+        localStorage.setItem('TotalQuantityCart',String(oldQuantity+quantity) );
+        localStorage.setItem('AmountTotal',String(oldAmountTotal+totalOrder));
+        var array =JSON.parse(localStorage.getItem("cardFood")|| "") ;
+        if(oldOrder && oldOrder.includes(idFood)){
+          for (var i = 0; i < array.length; i++) {
+            if (array[i].oFood === idFood) {
+              array[i].quantity = parseInt(array[i].quantity)+quantity;
+              localStorage.setItem('cardFood',JSON.stringify(array));
+            }
+          }
+          localStorage.setItem('cardFood',JSON.stringify(array));
+        }
+        else{
+          if(oldOrder){
+            var position = oldOrder.length-1 ;
+            var output = oldOrder.substring(0, position) +"," +newOrder + oldOrder.substring(position);
+            localStorage.setItem('cardFood',output);
+          }
+        }
+
+        this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
+        this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+        this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
+      }
+      if(oldOrder && !oldOrder.includes(restaurantId)){
+        console.log("resto vaovao");
+
+        this.elRef.nativeElement.querySelector('#differentResto').style.display = "block";
+      }
+
     }
-      this.navBar.quantityCard = localStorage.getItem("TotalQuantityCart")  || "";
 
       this.quantity=1;
       this.i =1;
-      //this.reloadCurrentRoute()
-      //this.router.navigate(['']);
       var modalFoodCommand = this.elRef.nativeElement.querySelector('#modalFoodCommand');
       modalFoodCommand.style.display = "none";
-      this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
-      this.shared.changeCardSource(JSON.parse("["+localStorage.getItem("cardFood")+"]") );
+      // this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
+      // this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+      // this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
   }
 
   LoginCustSubmit() {

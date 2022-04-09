@@ -6,6 +6,7 @@ import { CustomerService } from '../../services/customer.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { DelivererService } from '../../services/deliverer.service';
 import { AdminService } from '../../services/admin.service';
+import { FoodService } from '../../services/food.service';
 import { SharedService } from '../../services/shared.service';
 import { Subject } from 'rxjs';
 @Component({
@@ -21,6 +22,9 @@ export class NavbarComponent implements  AfterViewInit {
 
   listCardSrc: Subject<any>;
   public listCardValueSecond: any;
+
+  totalAmountSrc :Subject<string>;
+  public totalAmountValueSecond: string ="";
 
   usernameCustLog: string = '';
   passwordCustLog: string = '';
@@ -47,6 +51,12 @@ export class NavbarComponent implements  AfterViewInit {
 
   quantityCard :string ='';
   listCard : any;
+  totalAmount :string ="";
+
+  listIdFood :string[] = [];
+  listCardWName :any
+  foodSelected:any;
+  stringLId:any;
 
   constructor(public elRef: ElementRef,
   private spinner: NgxSpinnerService,
@@ -55,6 +65,7 @@ export class NavbarComponent implements  AfterViewInit {
   private delivererService: DelivererService,
   private adminService: AdminService,
   private router: Router,
+  private foodService: FoodService,
   private shared: SharedService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -65,6 +76,14 @@ export class NavbarComponent implements  AfterViewInit {
     this.quantitySrc.subscribe(value => {
       this.quantityValueSecond = value;
     });
+
+
+    this.totalAmountSrc = this.shared.amountTotalSource;
+
+    this.totalAmountSrc.subscribe(value => {
+      this.totalAmountValueSecond = value;
+    });
+
 
     this.listCardSrc = this.shared.listCardSource;
 
@@ -133,8 +152,10 @@ export class NavbarComponent implements  AfterViewInit {
 
   }
   public ngAfterViewInit():void{
-    setTimeout(()=>
-    this.quantityCard = localStorage.getItem("TotalQuantityCart")  || ""
+    setTimeout(()=>{
+      this.quantityCard = localStorage.getItem("TotalQuantityCart")  || "";
+      this.totalAmount = localStorage.getItem("AmountTotal") || "";
+    }
     ,0);
     // if( localStorage.getItem("customer")){
     //   this.elRef.nativeElement.querySelector('#connectedId').style.display = "none";
@@ -220,9 +241,6 @@ export class NavbarComponent implements  AfterViewInit {
     //   cancel.style.color = '#ff3d00';
     // });
 
-    this.clickedElement = fromEvent(closeCard, 'click').subscribe(() => {
-      modalCard.style.display = "none";
-    });
 
     this.clickedElement = fromEvent(showChoiceLogin, 'click').subscribe(() => {
       modalLoginChoice.style.display = "block";
@@ -439,6 +457,8 @@ export class NavbarComponent implements  AfterViewInit {
     this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
     this.elRef.nativeElement.querySelector('#connectedId').style.display = "block";
 
+    this.shared.changeQuantity("");
+    this.shared.changeCardSource(null);
     return false;
   }
   RegistCustSubmit(){
@@ -489,12 +509,111 @@ export class NavbarComponent implements  AfterViewInit {
     this.elRef.nativeElement.querySelector('.cancel-icon').classList.remove('show');
     this.elRef.nativeElement.querySelector('form').classList.remove('active');
     this.elRef.nativeElement.querySelector('.cancel-icon').style.color = '#ff3d00';
+    //console.log(this.shownFoodById("6246f8ac7ee07dad10c613e7"));
     if(this.listCardValueSecond){
-      console.log("avy shared "+this.listCardValueSecond.length);
+      // console.log("avy shared "+this.listCardValueSecond.length);
+      // /////averina avadika tableau
+      // var listIdFoodOld :string[] = [];
+      // for (let item of this.listCardValueSecond) {
+      //   listIdFoodOld.push(item.oFood);
+      // }
+      // this.listIdFood=listIdFoodOld;
+      // //console.log((this.listIdFood.toString()).split(','));
+      // this.stringLId = this.listIdFood.toString();
+      // console.log(this.stringLId);
+      //console.log("shared =" +this.listCardValueSecond.length+" and localstrage "  + this.listCard.length);
+    }
+    else if(localStorage.getItem("cardFood")){
+      this.listCard = JSON.parse(localStorage.getItem("cardFood")||"");
+      // console.log("avy amin localStorage "+this.listCard)
+      // for (let item of this.listCard) {
+      //   this.listIdFood.push(item.oFood);
+      // }
+      // this.stringLId = this.listIdFood.toString();
+      // console.log(this.stringLId);
+      // //console.log((this.listIdFood.toString()).split(','));
+      // //console.log("shared =" +this.listCardValueSecond.length+" and localstrage "  + this.listCard.length);
     }
     else{
-      this.listCard = JSON.parse("["+localStorage.getItem("cardFood")+"]");
-      console.log("avy amin localStorage "+this.listCard.length)
+      console.log("tsisy mints");
+    }
+    // if(stringLId){
+    //   const success = (response: any) => {
+    //
+    //     if (response['status'] == 200) {
+    //       this.listCardWName = response['datas'];
+    //       this.listCardWName = this.listCardWName.map((item: any) => {
+    //         item.show = true;
+    //         return item;
+    //       });
+    //     } else {
+    //       this.error_msg = response['message'];
+    //     }
+    //   };
+    //   const error = (response: any) => {
+    //   };
+    //   this.foodService
+    //     .showFoodByListId(stringLId)
+    //     .subscribe(success, error);
+    //
+    // }
+        // const success = (response: any) => {
+        //
+        //   if (response['status'] == 200) {
+        //     this.listCardWName = response['datas'];
+        //     this.listCardWName = this.listCardWName.map((item: any) => {
+        //       item.show = true;
+        //       return item;
+        //     });
+        //   } else {
+        //     this.error_msg = response['message'];
+        //   }
+        // };
+        // const error = (response: any) => {
+        // };
+        // this.foodService
+        //   .showFoodByListId(this.stringLId)
+        //   .subscribe(success, error);
+        //   console.log(this.listCardWName);
+  }
+  deleteItemOnCard(oFood:string,quantity:number,price:number){
+
+    var totalOrder = price*quantity;
+    var oldQuantity = parseInt(localStorage.getItem("TotalQuantityCart") || "") ;
+    var oldAmountTotal = parseInt(localStorage.getItem("AmountTotal") || "") ;
+    //console.log(this.listCard);
+    let actualListCard :any;
+    if(this.listCardValueSecond){
+      actualListCard =this.listCardValueSecond;
+    }
+    else{
+      actualListCard =this.listCard;
+    }
+
+
+      for (let [i, item] of actualListCard.entries()) {
+        if (item.oFood === oFood) {
+          actualListCard.splice(i, 1); // Tim is now removed from "users"
+        }
+      }
+
+      localStorage.setItem('TotalQuantityCart',String(oldQuantity-quantity) );
+      localStorage.setItem('AmountTotal',String(oldAmountTotal-totalOrder));
+      localStorage.setItem('cardFood',JSON.stringify(actualListCard));
+      this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
+      this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+      this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
+
+    if(localStorage.getItem("TotalQuantityCart") && localStorage.getItem("TotalQuantityCart") ==="0"){
+      this.listCard=null;
+      this.quantityCard="";
+      this.totalAmount="";
+      localStorage.removeItem('cardFood');
+      localStorage.removeItem('TotalQuantityCart');
+      localStorage.removeItem('AmountTotal');
+      this.shared.changeQuantity("");
+      this.shared.changeAmountTotalSource("");
+      this.shared.changeCardSource(null );
     }
   }
 }

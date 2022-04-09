@@ -49,6 +49,9 @@ export class CustomerService {
     localStorage.removeItem('restaurant');
     localStorage.removeItem('admin');
     localStorage.removeItem('deliverer');
+    localStorage.removeItem('cardFood');
+    localStorage.removeItem('TotalQuantityCart');
+    localStorage.removeItem('AmountTotal');
   }
   isTokExpired() {
     const jwtHelper = new JwtHelperService();

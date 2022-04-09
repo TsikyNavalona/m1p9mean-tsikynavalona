@@ -27,6 +27,7 @@
     "express-session": "^1.17.2",
     "jsonwebtoken": "*",
     "mongoose": "*",
+    "mongoskin": "^2.1.0",
     "nodemon": "^2.0.15",
     "passport": "*",
     "passport-jwt": "*"

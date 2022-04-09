@@ -40,4 +40,21 @@ export class SharedService {
   changeCardSource(n : any){
     this.listCardSource.next(n);
   }
+
+  _amountTotal: string ="";
+
+  _amountTotalSource: Subject<string> = new Subject();
+
+  get amountTotalSource(): Subject<string>{
+    return this._amountTotalSource;
+  }
+
+  set amountTotalSource(src: Subject<string>){
+    this._amountTotalSource = src;
+  }
+
+  changeAmountTotalSource(n : string){
+    this.amountTotalSource.next(n);
+  }
+
 }

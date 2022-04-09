@@ -121,6 +121,24 @@ let deleteFoodById = async (req, res, next) => {
   }
 };
 
+let showFoodByListId = async (req, res, next) => {
+  try {
+    let listId = (req.params.id).split(',');
+    var ObjectId = require('mongoskin').ObjectId;
+    var array2 = []
+    listId.forEach(function(stringId){
+      array2.push(new ObjectId(stringId));
+    });
+    const foods = await Food.find({
+      _id: {
+        $in: array2
+      }
+    });
+    res.json({ status: "200", datas: foods });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 module.exports = {
   showAllFood: showAllFood,
   addFood: addFood,
@@ -129,4 +147,5 @@ module.exports = {
   showFoodByIdV2: showFoodByIdV2,
   updateFoodById: updateFoodById,
   deleteFoodById: deleteFoodById,
+  showFoodByListId: showFoodByListId
 };

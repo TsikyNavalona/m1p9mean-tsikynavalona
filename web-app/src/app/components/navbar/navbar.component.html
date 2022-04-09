@@ -37,7 +37,7 @@
   </form>
 
   <div style="" class="nav-items">
-    <li *ngIf="checkUserNotCustomer()"><a style="cursor: pointer;" (click)="showCart()" ><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">{{ quantityValueSecond || quantityCard || 0}}</span></a></li>
+    <li *ngIf="checkUserNotCustomer()&&checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showCart()" ><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">{{ quantityValueSecond || quantityCard || 0}}</span></a></li>
     <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
     <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
     <li *ngIf="checkExistToken('restaurant')" ><a style="cursor: pointer;" id="showrestaurantMenu">{{data.rName}} </a></li>
@@ -49,8 +49,24 @@
 
 <div id="modalCard" class="modal">
   <div class="modal-content">
-    <span style="cursor: pointer;" class="closeCard">&times;</span>
-    <h1>card list</h1>
+    <h1 *ngIf="listCard || listCardValueSecond">Order list:</h1>
+    <div  class=" row" style="width:100%;text-align:center;margin-top:25px;" *ngFor="let item of listCard; ">
+      <p style="font-size:19px;color:#1abc9c" *ngIf="!listCardValueSecond" class=" col-5">{{item.fName}}</p>
+      <p *ngIf="!listCardValueSecond" class=" col-3">Qty: {{item.quantity}}</p>
+      <p *ngIf="!listCardValueSecond" class=" col-2">{{ item.fPrice*item.quantity | number: '.0' }} Ar</p>
+      <p *ngIf="!listCardValueSecond" (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice)" class=" col-2"><img src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
+    </div>
+    <div class=" row"  style="width:100%;text-align:center;margin-top:25px" *ngFor="let item of listCardValueSecond; ">
+      <p style="font-size:19px;color:#1abc9c" class="col-5">{{item.fName}}</p>
+      <p class="col-3">Qty: {{item.quantity}}</p>
+      <p class="col-2">{{ item.fPrice*item.quantity | number: '.0' }} Ar</p>
+      <p class=" col-2"><img (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice)" src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
+    </div>
+    <button *ngIf="listCard || listCardValueSecond"  style="display: inline;margin-top:25px" class="btn card_btn">
+      <p style="display: inline;;margin-right:48px;">Validate the order</p>
+      <p style="display: inline"> {{totalAmountValueSecond || totalAmount || "" | number: '.0'}} Ar</p>
+    </button>
+    <h1 *ngIf="!listCard && !listCardValueSecond"> Your cart is empty </h1>
   </div>
 </div>
 
