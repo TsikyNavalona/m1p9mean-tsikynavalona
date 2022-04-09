@@ -201,8 +201,6 @@ onDocumentClick(event: MouseEvent) {
       var oldAmountTotal = parseInt(localStorage.getItem("AmountTotal") || "") ;
       var oldOrder = localStorage.getItem("cardFood");
       if(oldOrder && oldOrder.includes(restaurantId)){
-        console.log("resto mitovy");
-
         localStorage.setItem('TotalQuantityCart',String(oldQuantity+quantity) );
         localStorage.setItem('AmountTotal',String(oldAmountTotal+totalOrder));
         var array =JSON.parse(localStorage.getItem("cardFood")|| "") ;
@@ -228,8 +226,6 @@ onDocumentClick(event: MouseEvent) {
         this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
       }
       if(oldOrder && !oldOrder.includes(restaurantId)){
-        console.log("resto vaovao");
-
         this.elRef.nativeElement.querySelector('#differentResto').style.display = "block";
       }
 

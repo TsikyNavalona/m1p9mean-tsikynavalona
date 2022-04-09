@@ -7,6 +7,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { DelivererService } from '../../services/deliverer.service';
 import { AdminService } from '../../services/admin.service';
 import { FoodService } from '../../services/food.service';
+import { OrderService } from '../../services/order.service';
 import { SharedService } from '../../services/shared.service';
 import { Subject } from 'rxjs';
 @Component({
@@ -66,6 +67,7 @@ export class NavbarComponent implements  AfterViewInit {
   private adminService: AdminService,
   private router: Router,
   private foodService: FoodService,
+  private orderService: OrderService,
   private shared: SharedService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -359,7 +361,7 @@ export class NavbarComponent implements  AfterViewInit {
 
           this.elRef.nativeElement.querySelector('#modalLogCustomer').style.display = "none";
           this.spinner.hide();
-        }, 5000);
+        }, 1000);
         this.customerService.storeCustomerData(
           response.token,
           response.customer
@@ -484,7 +486,7 @@ export class NavbarComponent implements  AfterViewInit {
           setTimeout(() => {
             this.elRef.nativeElement.querySelector('#modalRegiCustomer').style.display = "none";
             this.spinner.hide();
-          }, 2000);
+          }, 1000);
           this.router.navigate(['/']);
         }
 
@@ -615,5 +617,57 @@ export class NavbarComponent implements  AfterViewInit {
       this.shared.changeAmountTotalSource("");
       this.shared.changeCardSource(null );
     }
+  }
+  valideOrder(){
+    let actualUser = JSON.parse(localStorage.getItem("customer") || "")  ;
+    let amount = "";
+    let restaurantId ="";
+    if(this.totalAmountValueSecond){
+      amount=this.totalAmountValueSecond;
+    }else{
+      amount=this.totalAmount;
+    }
+
+    let actualListCard :any;
+    if(this.listCardValueSecond){
+      actualListCard =this.listCardValueSecond;
+      restaurantId = actualListCard[0].idRestaurant;
+    }
+    else{
+      actualListCard =this.listCard;
+      restaurantId = actualListCard[0].idRestaurant;
+    }
+    const order = {
+      allFoodOrdered: actualListCard,
+      oRestaurant: restaurantId,
+      oCustomer:actualUser.id,
+      oAmount:amount
+    };
+    console.log(order);
+
+    const onSuccess = (response: any) => {};
+    const onError = (response: any) => {};
+    try {
+        this.orderService.newOrder(order).subscribe(onSuccess, onError);
+        this.listCard=null;
+        this.quantityCard="";
+        this.totalAmount="";
+        localStorage.removeItem('cardFood');
+        localStorage.removeItem('TotalQuantityCart');
+        localStorage.removeItem('AmountTotal');
+        this.shared.changeQuantity("");
+        this.shared.changeAmountTotalSource("");
+        this.shared.changeCardSource(null );
+        this.spinner.show();
+        this.error_msg = "";
+        setTimeout(() => {
+          this.elRef.nativeElement.querySelector('#modalCard').style.display = "none";
+          this.spinner.hide();
+        }, 1000);
+        this.router.navigate(['/']);
+    } catch (error) {this.error_msg = "Please, complete all fields!";}
+
+
+
   }
 }

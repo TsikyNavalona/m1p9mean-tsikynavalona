@@ -62,7 +62,7 @@
       <p class="col-2">{{ item.fPrice*item.quantity | number: '.0' }} Ar</p>
       <p class=" col-2"><img (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice)" src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
     </div>
-    <button *ngIf="listCard || listCardValueSecond"  style="display: inline;margin-top:25px" class="btn card_btn">
+    <button (click)="valideOrder()" *ngIf="listCard || listCardValueSecond"  style="display: inline;margin-top:25px" class="btn card_btn">
       <p style="display: inline;;margin-right:48px;">Validate the order</p>
       <p style="display: inline"> {{totalAmountValueSecond || totalAmount || "" | number: '.0'}} Ar</p>
     </button>
