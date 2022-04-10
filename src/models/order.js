@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema({
   allFoodOrdered: [
     {
       oFood: { type: ObjectId, ref: "Food" },
-      quantitiy: Number,
+      quantity: {type:String,required:true},
     },
   ],
 
@@ -23,6 +23,7 @@ const OrderSchema = new mongoose.Schema({
     type: ObjectId,
     ref: "Deliverer",
     required: false,
+    default: null
   },
   oAmount: {
     type: Number,
@@ -30,8 +31,8 @@ const OrderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "Not processed",
-    enum: ["Not processed", "Processing", "Shipped", "Delivered", "Cancelled"],
+    default: "not prepared",
+    enum: ["not prepared", "prepared", "delivered", "Cancelled"],
   },
   orderAt: {
     type: Date,

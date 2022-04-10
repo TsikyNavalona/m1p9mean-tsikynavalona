@@ -57,4 +57,37 @@ export class SharedService {
     this.amountTotalSource.next(n);
   }
 
+
+
+    _listFinishedResto: any;
+
+    _listFinishedRestoSource: Subject<any> = new Subject();
+
+    get listFinishedRestoSource(): Subject<any>{
+      return this._listFinishedRestoSource;
+    }
+
+    set listFinishedRestoSource(src: Subject<any>){
+      this._listFinishedRestoSource = src;
+    }
+
+    changelistFinishedRestoSource(n : any){
+      this.listFinishedRestoSource.next(n);
+    }
+//////////////////////////////
+    _listNotPreparedResto: any;
+
+    _listNotPreparedRestoSource: Subject<any> = new Subject();
+
+    get listNotPreparedRestoSource(): Subject<any>{
+      return this._listNotPreparedRestoSource;
+    }
+
+    set listNotPreparedRestoSource(src: Subject<any>){
+      this._listNotPreparedRestoSource = src;
+    }
+
+    changelistNotPreparedRestoSource(n : any){
+      this.listNotPreparedRestoSource.next(n);
+    }
 }

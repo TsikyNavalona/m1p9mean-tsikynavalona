@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { CustomerService } from '../services/customer.service';
-import { RestaurantService } from '../services/restaurant.service';
+import { DelivererService } from '../services/deliverer.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthDelivererGuard implements CanActivate {
   constructor(
-    private customerService: CustomerService,
-    private restaurantService: RestaurantService,
+    private delivererService: DelivererService,
     private router: Router
   ) {}
 
   canActivate() {
-    if (this.customerService.isTokExpired()) {
+    if (this.delivererService.isTokExpired()) {
       this.router.navigate(['']);
       return false;
     } else {

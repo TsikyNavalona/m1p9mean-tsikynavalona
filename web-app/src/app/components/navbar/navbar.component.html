@@ -21,12 +21,12 @@
     </div>
   </a>
   <div class="search-icon">
-    <span class="fas fa-search"></span>
+    
   </div>
   <div class="cancel-icon">
     <span class="fas fa-times"></span>
   </div>
-  <form action="#" style="border-radius: 500px;">
+  <!-- <form action="#" style="border-radius: 500px;">
     <input
       type="search"
       class="search-data"
@@ -34,9 +34,9 @@
       required
     />
     <button type="submit" class="fas fa-search"></button>
-  </form>
+  </form> -->
 
-  <div style="" class="nav-items">
+  <div style="float:right" class="nav-items">
     <li *ngIf="checkUserNotCustomer()&&checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showCart()" ><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">{{ quantityValueSecond || quantityCard || 0}}</span></a></li>
     <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
     <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
@@ -242,8 +242,8 @@
 <div id="modalcustomerMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Customer </span> menu :</h1>
-    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
-    <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a  style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
+    <a style="cursor: pointer;" (click)="onOrderCustomerClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>
@@ -252,9 +252,9 @@
 <div id="modalrestaurantMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Restaurant </span> menu :</h1>
-    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
-    <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
-    <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
+    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice" style="width:230px"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Restaurant Info</span></div></a>
+    <a style="cursor: pointer;" (click)="onOrderRestaurantClick()" style="text-decoration: none;"><div class="linkChoice"style="width:230px"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"style="width:230px"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>
 
@@ -263,7 +263,7 @@
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Deliverer </span> menu :</h1>
     <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
-    <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onOrderDelivererClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>
@@ -272,7 +272,7 @@
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Admin </span> menu :</h1>
     <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
-    <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onOrderAdminClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>

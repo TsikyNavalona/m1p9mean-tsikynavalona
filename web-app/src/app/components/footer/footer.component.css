@@ -1,0 +1,21 @@
+.footer {
+    margin-top: 0;
+    /*border-top: 1px solid #292929;*/
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-inner {
+    padding: 15px 0;
+    font-size: 16px;
+    color: black;
+    bottom: 0;
+    background-color: #f1f1f1;
+}
+
+.footer-inner a {
+    color: white;
+    font-family: verdana;
+}

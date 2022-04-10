@@ -28,7 +28,7 @@ nav .logo {
 nav .nav-items {
   display: flex;
   flex: 1;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 750px;
 }
 nav .nav-items li {
   list-style: none;

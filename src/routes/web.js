@@ -43,10 +43,17 @@ router.get("/showAllFoodByRestaurant/:id", FoodService.showAllFoodByRestaurant);
 router.get("/showFoodByListId/:id", FoodService.showFoodByListId);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllOrder", OrderService.showAllOrder);
-router.get("/showAllOrderByCustomer/:id", OrderService.showAllOrderByCustomer);
+router.get("/showAllOrderByCustomer/:id",passport.authenticate('jwt',{session:false}), OrderService.showAllOrderByCustomer);
+router.get("/showAllOrderByRestaurant/:id",OrderService.showAllOrderByRestaurant);
+router.get("/showAllOrderByRestaurantV2/:id/:status",OrderService.showAllOrderByRestaurantV2);
 router.get("/showSumOrder", OrderService.showSumOrder);
 router.post("/addOrder", OrderService.addOrder);
+router.get("/showOrderById/:id", OrderService.showOrderById);
+router.get("/showAllOrderByDeliverer/:id", OrderService.showAllOrderByDeliverer);
+router.get("/showAllPreparedOrder", OrderService.showAllPreparedOrder);
+
 router.delete("/deleteOrderById/:id", OrderService.deleteOrderById);
+router.patch("/updateOrderById/:id", OrderService.updateOrderById);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/showAllAdmin", AdminService.showAllAdmin);
 router.post("/addAdmin", AdminService.addAdmin);

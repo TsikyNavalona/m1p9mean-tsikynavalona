@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
+import {DataTablesModule} from 'angular-datatables';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,10 +15,18 @@ import { ProfileCustomerComponent } from './components/profile-customer/profile-
 
 import { AuthInterceptor } from './config/auth.interceptor';
 import { AuthGuard } from './config/auth.guard';
+import { AuthRestoGuard } from './config/authResto.guard';
+import { AuthDelivererGuard } from './config/authDeliv.guard';
+import { AuthAdminGuard } from './config/authAdmin.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListFoodComponent } from './components/list-food/list-food.component';
 import { SharedService } from './services/shared.service';
+import { OrderCustomerComponent } from './components/order-customer/order-customer.component';
+import { OrderRestaurantComponent } from './components/order-restaurant/order-restaurant.component';
+import { OrderDelivererComponent } from './components/order-deliverer/order-deliverer.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { OrderAdminComponent } from './components/order-admin/order-admin.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +37,19 @@ import { SharedService } from './services/shared.service';
     ProfileCustomerComponent,
     NavbarComponent,
     ListFoodComponent,
+    OrderCustomerComponent,
+    OrderRestaurantComponent,
+    OrderDelivererComponent,
+    FooterComponent,
+    OrderAdminComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule,NgxSpinnerModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule,NgxSpinnerModule,DataTablesModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
+    AuthRestoGuard,
+    AuthDelivererGuard,
+    AuthAdminGuard,
     NavbarComponent,
     SharedService
   ],

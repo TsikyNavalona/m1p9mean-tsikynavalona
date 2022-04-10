@@ -83,20 +83,6 @@ onDocumentClick(event: MouseEvent) {
   }
 
   ngAfterViewInit(): void {
-  //   console.log(this.buttonTag.length);
-  //   this.buttonTag.map((tag) => {
-  //     console.log(tag);
-  //     this.clickedElement = fromEvent(tag.nativeElement.id, 'click').subscribe(() => {
-  //       console.log("ok");
-  //     });
-  //   })
-  //   //console.log(this.buttonTag._results);
-  // //  console.log(this..get(0).nativeElement.id);
-  //   this.buttonTag.map((tag) => {
-  //     //console.log(tag.nativeElement.value);
-  //       console.log(tag.nativeElement.id);
-  //
-  //   })
     const allParams = this.activatedRoute.snapshot.params;
     setTimeout(()=>
     this.activatedRoute.paramMap.subscribe((x) => {
@@ -114,11 +100,9 @@ onDocumentClick(event: MouseEvent) {
       if (response['status'] == 200) {
         this.restaurant = response['datas'];
       } else {
-        console.log('blem');
       }
     };
     const error = (response: any) => {
-      console.log('blema');
     };
     this.restaurantService
       .showRestaurantById(idRestaurant)

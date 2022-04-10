@@ -6,8 +6,15 @@ import { LoginCustomerComponent } from './components/login-customer/login-custom
 import { ProfileCustomerComponent } from './components/profile-customer/profile-customer.component';
 import { ListFoodComponent } from './components/list-food/list-food.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { OrderCustomerComponent } from './components/order-customer/order-customer.component';
+import { OrderRestaurantComponent } from './components/order-restaurant/order-restaurant.component';
+import { OrderDelivererComponent } from './components/order-deliverer/order-deliverer.component';
+import { OrderAdminComponent } from './components/order-admin/order-admin.component';
 
 import { AuthGuard } from './config/auth.guard';
+import { AuthRestoGuard } from './config/authResto.guard';
+import { AuthDelivererGuard } from './config/authDeliv.guard';
+import { AuthAdminGuard } from './config/authAdmin.guard';
 
 const routes: Routes = [
   {
@@ -34,6 +41,26 @@ const routes: Routes = [
   {
     path: 'nav-bar',
     component: NavbarComponent,
+  },
+  {
+    path: 'order-customer/:id',
+    component: OrderCustomerComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'order-restaurant/:id',
+    component: OrderRestaurantComponent,
+    canActivate: [AuthRestoGuard],
+  },
+  {
+    path: 'order-deliverer/:id',
+    component: OrderDelivererComponent,
+    canActivate: [AuthDelivererGuard],
+  },
+  {
+    path: 'order-admin/:id',
+    component: OrderAdminComponent,
+    canActivate: [AuthAdminGuard],
   },
 
 ];
