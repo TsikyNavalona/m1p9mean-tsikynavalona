@@ -136,7 +136,7 @@ export class OrderRestaurantComponent implements OnInit {
         try {
           this.ngOnInit();
           this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.navigate(['/order-restaurant/'+restaurant.id],{
+          this.router.navigate([''],{
             relativeTo: this.activatedRoute
           })
         } catch (error) {

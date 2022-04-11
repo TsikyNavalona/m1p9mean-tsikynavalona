@@ -139,7 +139,7 @@ export class OrderDelivererComponent implements OnInit {
         try {
           this.ngOnInit();
           this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.navigate(['/order-deliverer/'+deliverer.id],{
+          this.router.navigate([''+deliverer.id],{
             relativeTo: this.activatedRoute
           })
         } catch (error) {
