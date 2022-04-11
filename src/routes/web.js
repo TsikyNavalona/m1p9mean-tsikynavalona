@@ -51,6 +51,7 @@ router.post("/addOrder", OrderService.addOrder);
 router.get("/showOrderById/:id", OrderService.showOrderById);
 router.get("/showAllOrderByDeliverer/:id", OrderService.showAllOrderByDeliverer);
 router.get("/showAllPreparedOrder", OrderService.showAllPreparedOrder);
+router.get("/showAllDeliveredOrder", OrderService.showAllDeliveredOrder);
 
 router.delete("/deleteOrderById/:id", OrderService.deleteOrderById);
 router.patch("/updateOrderById/:id", OrderService.updateOrderById);

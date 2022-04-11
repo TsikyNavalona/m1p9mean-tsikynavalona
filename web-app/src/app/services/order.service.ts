@@ -66,6 +66,9 @@ export class OrderService {
   showAllPreparedOrder (){
     return this.http.get(base_url + 'showAllPreparedOrder');
   }
+  showAllDeliveredOrder (){
+    return this.http.get(base_url + 'showAllDeliveredOrder');
+  }
   updateOrderById(id:any, order:any){
     let httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'application/json');

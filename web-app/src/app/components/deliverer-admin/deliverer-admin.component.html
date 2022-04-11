@@ -1,0 +1,127 @@
+
+<ngx-spinner
+  bdColor="rgba(255,255,255,0.97)"
+  template="<img src='../../assets/img/giphy.gif'  style='width:150px' />"
+  type="ball-8bits"
+>
+<p style="color: black;margin-top:60px;font-weight:bold;font-size:17px" > Loading... </p>
+</ngx-spinner>
+
+
+<img (click)="registerDeliverer()" style="width:30px;height:30px;display: inline;margin-left:6.5%" class="imgPlusMinus" src="../../assets/img/plus.png" alt="">
+
+
+<div class="container-fluid py-4">
+  <h1 style="text-align:center">Deliverer Admin:</h1>
+  <div class="row mt-5">
+    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of Deliverer</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{list_deliverer.length}}
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/dinner.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of delivered orders </p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.list_order_Delivered.length}}
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/box.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 style="text-align:center;margin-top:50px">List of Deliverer</h1>
+  <div class="table-responsive" style="margin-bottom:50px;">
+    <table class="table table-width table-condensed" style="align-items:center;background-color:white">
+      <thead>
+        <tr style="color:#1abc9c;text-align:center">
+          <th>Deliverer Username</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align:center" *ngFor="let item of list_deliverer">
+          <td>{{item.dUsername}}</td>
+          <td>{{item.dNumber}}</td>
+          <td>{{item.dEmail}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+  <div id="modalRegisterDeliverer" class="modal">
+    <div class="modal-content">
+      <h1 style="margin-top:10px">Add new <span style="color:#1abc9c"> Deliverer </span> :</h1>
+      <div class="screen-1" style="margin-top:25px">
+        <form   class="screen-1" (submit)="RegisterDelivererSubmit()">
+          <div class="email">
+            <label for="email">Name</label>
+            <div class="sec-2">
+              <input type="text"  [(ngModel)]="dName" name="dName" placeholder="Enter Deliverer Name!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Username</label>
+            <div class="sec-2">
+              <input type="email"  [(ngModel)]="dUsername" name="dUsername" placeholder="Enter Deliverer Username!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Email</label>
+            <div class="sec-2">
+              <input type="email"  [(ngModel)]="dEmail" name="dEmail" placeholder="Enter Deliverer Email!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Phone number</label>
+            <div class="sec-2">
+              <input type="tel"  [(ngModel)]="dNumber" name="dNumber" placeholder="Enter Deliverer Number!" required/>
+            </div>
+          </div>
+
+          <div class="password" style="margin-top:6px">
+            <label for="password">Password</label>
+            <div class="sec-2">
+              <input class="pas" type="password"   [(ngModel)]="dPassword" name="dPassword" placeholder="Enter Deliverer Password!" required/>
+            </div>
+          </div>
+          <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+          <input class="login" type="submit" value="Register">
+        </form>
+        </div>
+    </div>
+  </div>

@@ -12,6 +12,7 @@ import { OrderDelivererComponent } from './components/order-deliverer/order-deli
 import { OrderAdminComponent } from './components/order-admin/order-admin.component';
 import { RestaurantAdminComponent } from './components/restaurant-admin/restaurant-admin.component';
 import { ManageRestaurantComponent } from './components/manage-restaurant/manage-restaurant.component';
+import { DelivererAdminComponent } from './components/deliverer-admin/deliverer-admin.component';
 
 import { AuthGuard } from './config/auth.guard';
 import { AuthRestoGuard } from './config/authResto.guard';
@@ -74,6 +75,12 @@ const routes: Routes = [
     component: ManageRestaurantComponent,
     canActivate: [AuthRestoGuard],
   },
+  {
+    path: 'deliverer-admin/:id',
+    component: DelivererAdminComponent,
+    canActivate: [AuthAdminGuard],
+  },
+
 ];
 
 @NgModule({

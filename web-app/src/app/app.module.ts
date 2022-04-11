@@ -29,6 +29,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { OrderAdminComponent } from './components/order-admin/order-admin.component';
 import { RestaurantAdminComponent } from './components/restaurant-admin/restaurant-admin.component';
 import { ManageRestaurantComponent } from './components/manage-restaurant/manage-restaurant.component';
+import { DelivererAdminComponent } from './components/deliverer-admin/deliverer-admin.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ManageRestaurantComponent } from './components/manage-restaurant/manage
     OrderAdminComponent,
     RestaurantAdminComponent,
     ManageRestaurantComponent,
+    DelivererAdminComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule,NgxSpinnerModule,DataTablesModule],
   providers: [

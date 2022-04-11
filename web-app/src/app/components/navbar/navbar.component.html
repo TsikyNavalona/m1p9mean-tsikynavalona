@@ -66,7 +66,10 @@
       <p style="display: inline;;margin-right:48px;">Validate the order</p>
       <p style="display: inline"> {{totalAmountValueSecond || totalAmount || "" | number: '.0'}} Ar</p>
     </button>
-    <h1 *ngIf="!listCard && !listCardValueSecond"> Your cart is empty </h1>
+    <div *ngIf="!listCard && !listCardValueSecond"class="">
+      <img src="../../assets/img/warning.png" style="margin-left:35px" alt="">
+      <h1 > Your cart is empty !</h1>
+    </div>
   </div>
 </div>
 
@@ -241,7 +244,6 @@
 <div id="modalcustomerMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Customer </span> menu :</h1>
-    <a  style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
     <a style="cursor: pointer;" (click)="onOrderCustomerClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
@@ -261,7 +263,6 @@
 <div id="modaldelivererMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Deliverer </span> menu :</h1>
-    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
     <a style="cursor: pointer;" (click)="onOrderDelivererClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
@@ -270,8 +271,8 @@
 <div id="modaladminMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Admin </span> menu :</h1>
-    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
     <a style="cursor: pointer;" (click)="onOrderAdminClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)='onDelivererAdminCLick()' style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/delivery-bike.png" style="width:30px;margin-right:30px" alt=""><span>Deliverer</span></div></a><br>
     <a style="cursor: pointer;" (click)="onRestaurantAdminClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/restaurant.png" style="width:30px;margin-right:30px" alt=""><span>Restaurant</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>

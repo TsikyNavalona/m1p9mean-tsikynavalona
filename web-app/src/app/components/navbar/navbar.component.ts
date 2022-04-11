@@ -588,7 +588,6 @@ export class NavbarComponent implements  AfterViewInit {
       oAmount:amount,
       oBenefit:benefit
     };
-    console.log(order);
 
     const onSuccess = (response: any) => {};
     const onError = (response: any) => {};
@@ -611,8 +610,8 @@ export class NavbarComponent implements  AfterViewInit {
         this.elRef.nativeElement.querySelector('#modalCard').style.display = "none";
         setTimeout(() => {
           this.spinner.hide();
+          this.router.navigate(['/']);
         }, 1000);
-        this.router.navigate(['/']);
     } catch (error) {this.error_msg = "Please, complete all fields!";}
   }
   onOrderCustomerClick(){
@@ -655,6 +654,13 @@ export class NavbarComponent implements  AfterViewInit {
     this.elRef.nativeElement.querySelector('#modalrestaurantMenu').style.display = "none";
     if(restaurant){
       this.router.navigate(['/manage-restaurant/'+restaurant.id]);
+    }
+  }
+  onDelivererAdminCLick(){
+    let admin = JSON.parse(localStorage.getItem("admin") || "" );
+    this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
+    if(admin){
+      this.router.navigate(['/deliverer-admin/'+admin.id]);
     }
   }
 }

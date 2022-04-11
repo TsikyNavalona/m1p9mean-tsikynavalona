@@ -1,0 +1,278 @@
+#star {
+     margin-left: -5px !important;
+     vertical-align: bottom !important;
+     opacity: 1
+ }
+
+ .more {
+     opacity: 1 !important
+ }
+
+ .btn:hover {
+     color: black !important
+ }
+
+ .vl {
+     margin: 8px !important;
+     width: 2px;
+     border-right: 1px solid #aaaaaa;
+     height: 25px
+ }
+
+ #plus {
+     opacity: 1
+ }
+ .collection {
+    margin: 0.5rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0, 0, 0, 0.125);
+    border-radius: 1rem;
+    box-shadow: 0 0 2em #e6e9f9;
+}
+
+ .collection.with-header .collection-header {
+     background-color: #fff;
+     border-bottom: 1px solid #e0e0e0;
+   }
+
+   .collection.with-header .collection-item {
+     padding-left: 30px;
+   }
+
+   .collection.with-header .collection-item.avatar {
+     padding-left: 72px;
+   }
+
+ .collection.with-header .collection-header {
+     background-color: #fff;
+     border-bottom: 1px solid #e0e0e0;
+     padding: 10px 20px;
+   }
+   .collection .collection-item {
+     background-color: #fff;
+     line-height: 1.5rem;
+     padding: 10px 20px;
+     margin: 0;
+     border-bottom: 1px solid #e0e0e0;
+   }
+   .collapsible .collection {
+     margin: 0;
+     border: none;
+   }
+
+ ul:not(.browser-default) {
+     padding-left: 0;
+     list-style-type: none;
+   }
+
+   ul:not(.browser-default) > li {
+     list-style-type: none;
+   }
+ .card {
+
+   background-color: #fff;
+   background-clip: border-box;
+   border: 0 solid rgba(0, 0, 0, 0.125);
+   border-radius: 1rem;
+   box-shadow: 0 0 2em #e6e9f9;
+ }
+
+ a:hover {
+     background-color: #ccc !important
+ }
+
+ .btn-outlined:active {
+     color: #FFF;
+     border-color: #fff !important
+ }
+
+ img {
+     cursor: pointer;
+     overflow: visible
+ }
+ .card2 {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   min-width: 0;
+   word-wrap: break-word;
+   background-color: #fff;
+   background-clip: border-box;
+   border: 0 solid rgba(0, 0, 0, 0.125);
+   border-radius: 1rem;
+   box-shadow: 0 0 2em #e6e9f9;
+ }
+ .btn:focus,
+ .btn:active {
+     outline: none !important;
+     box-shadow: none !important
+ }
+
+ .container {
+     margin-top: 100px !important
+ }
+
+ .imgPlusMinus{
+   background-color:#1abc9c;
+   border-radius: 500px;
+   padding: 5px;
+   cursor: pointer;
+ }
+ .imgPlusMinus:hover{
+   background: #008b6e;
+ }
+ .modal {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   overflow: auto; /* Enable scroll if needed */
+   background-color: rgb(0,0,0); /* Fallback color */
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ }
+
+ /* Modal Content/Box */
+ .modal-content {
+   background-color: #fefefe;
+   margin: 10% auto; /* 15% from the top and centered */
+   padding: 20px;
+   border: 1px solid #888;
+   width: 500px; /* Could be more or less, depending on screen size */
+   align-items: center;
+ }
+ .screen-1 {
+   padding: 2em;
+   display: flex;
+   flex-direction: column;
+   gap: 2em;
+ }
+ .screen-1 .logo {
+   margin-top: -3em;
+ }
+ .screen-1 .email {
+   background: white;
+   box-shadow: 0 0 2em #e6e9f9;
+   padding: 1em;
+   display: flex;
+   flex-direction: column;
+   gap: 0.5em;
+   border-radius: 20px;
+   color: #4d4d4d;
+   margin-top: -3em;
+ }
+ .screen-1 .email input {
+   outline: none;
+   border: none;
+ }
+ .screen-1 .email input::-moz-placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .email input:-ms-input-placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .email input::placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .email ion-icon {
+   color: #4d4d4d;
+   margin-bottom: -0.2em;
+ }
+ .screen-1 .password {
+   background: white;
+   box-shadow: 0 0 2em #e6e9f9;
+   padding: 1em;
+   display: flex;
+   flex-direction: column;
+   gap: 0.5em;
+   border-radius: 20px;
+   color: #4d4d4d;
+ }
+ .screen-1 .password input {
+   outline: none;
+   border: none;
+ }
+ .screen-1 .password input::-moz-placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .password input:-ms-input-placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .password input::placeholder {
+   color: black;
+   font-size: 0.9em;
+ }
+ .screen-1 .password ion-icon {
+   color: #4d4d4d;
+   margin-bottom: -0.2em;
+ }
+ .screen-1 .password .show-hide {
+   margin-right: -5em;
+ }
+ .screen-1 .login {
+   padding: 1em;
+   background: #1abc9c;
+   color: white;
+   border: none;
+   border-radius: 30px;
+   font-weight: 600;
+ }
+ .screen-1 .footer {
+   display: flex;
+   font-size: 0.7em;
+   color: #5e5e5e;
+   gap: 14em;
+   padding-bottom: 10em;
+ }
+ .screen-1 .footer span {
+   cursor: pointer;
+ }
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+
+ /* Firefox */
+ input[type=number] {
+   -moz-appearance: textfield;
+ }
+ @media (min-width: 300px) {
+
+   .table-width{
+     width: 90% ;
+   }
+   .modal-content{
+     width: 90% ;
+   }
+ }
+ @media (min-width: 56rem) {
+   .table-width{
+     width: 60% ;
+     margin-left: 250px
+   }
+   .card{
+     width: 60% ;
+     margin-left: 250px;
+   }
+   .collection{
+     width: 40% ;
+     margin-left: 380px;
+
+   }
+   .modal-content{
+     width: 50% ;
+   }
+ }

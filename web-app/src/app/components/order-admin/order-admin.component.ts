@@ -1,4 +1,5 @@
 import { Component, ElementRef,OnInit, OnDestroy,AfterViewInit,HostListener } from '@angular/core';
+import {Meta ,Title} from "@angular/platform-browser";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ActivatedRoute,Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
@@ -23,11 +24,13 @@ export class OrderAdminComponent implements AfterViewInit {
     }
   }
   constructor(
+    private titleService:Title,
     public elRef: ElementRef,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private router: Router) {
+      this.titleService.setTitle("E-kaly : Order Admin ");
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 

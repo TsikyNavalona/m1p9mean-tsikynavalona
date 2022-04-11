@@ -12,6 +12,13 @@ export class FoodService {
     return this.http.get(base_url + 'showAllFood');
   }
 
+  newFood(food: any) {
+    let httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'application/json');
+    return this.http.post(base_url + 'addFood', food, {
+      headers: httpHeaders,
+    });
+  }
   showAllFoodByRestaurant(id: any) {
     return this.http.get(base_url + 'showAllFoodByRestaurant/' + id);
   }
@@ -21,5 +28,5 @@ export class FoodService {
   showFoodByListId(listId:any){
     return this.http.get(base_url + 'showFoodByListId/' + listId);
   }
-  
+
 }

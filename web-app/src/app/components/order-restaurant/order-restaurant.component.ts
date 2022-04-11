@@ -1,5 +1,6 @@
 import { Component, ElementRef,OnInit, OnDestroy,AfterViewInit,HostListener } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
+import {Meta ,Title} from "@angular/platform-browser";
 import { ActivatedRoute,Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import {fromEvent, Subscription,Subject} from 'rxjs';
@@ -9,7 +10,7 @@ import {fromEvent, Subscription,Subject} from 'rxjs';
   templateUrl: './order-restaurant.component.html',
   styleUrls: ['./order-restaurant.component.css']
 })
-export class OrderRestaurantComponent implements AfterViewInit {
+export class OrderRestaurantComponent implements OnInit {
 
   //listCardSrc: Subject<any>;
   //public listCardValueSecond: any;
@@ -31,15 +32,17 @@ export class OrderRestaurantComponent implements AfterViewInit {
     }
   }
   constructor(
+    private titleService:Title,
     public elRef: ElementRef,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private router: Router) {
+      this.titleService.setTitle("E-kaly : Order Restaurant ");
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     const allParams = this.activatedRoute.snapshot.params;
     this.activatedRoute.paramMap.subscribe((x) => {
       let idRestaurant = x.get('id');
@@ -54,9 +57,8 @@ export class OrderRestaurantComponent implements AfterViewInit {
       if (response['status'] == 200) {
         this.list_order_restaurant_notP=response['datas'];
 
-        setTimeout(()=>{
-          try {
             $('#example').DataTable({
+              "retrieve": true,
               "paging":   false,
               "info":     false,
               "language": {
@@ -64,9 +66,6 @@ export class OrderRestaurantComponent implements AfterViewInit {
                 "emptyTable":     "",
               }
             });
-          } catch (error) {
-          }
-        },0);
       } else {
         //this.error_msg = response['message'];
       }
@@ -83,9 +82,9 @@ export class OrderRestaurantComponent implements AfterViewInit {
       if (response['status'] == 200) {
         this.list_order_restaurant_F=response['datas'];
 
-        setTimeout(()=>{
           try {
             $('#okok').DataTable({
+              "retrieve": true,
               "paging":   false,
               "info":     false,
               "language": {
@@ -95,7 +94,6 @@ export class OrderRestaurantComponent implements AfterViewInit {
             });
           } catch (error) {
           }
-        },0);
       } else {
         //this.error_msg = response['message'];
       }
@@ -136,7 +134,7 @@ export class OrderRestaurantComponent implements AfterViewInit {
           //this.showAllOrderByRestaurantNP(restaurant.id);
           //this.showAllOrderByRestaurantF(restaurant.id);
         try {
-          //this.ngAfterViewInit();
+          this.ngOnInit();
           this.router.routeReuseStrategy.shouldReuseRoute = () => false;
           this.router.navigate(['/order-restaurant/'+restaurant.id],{
             relativeTo: this.activatedRoute

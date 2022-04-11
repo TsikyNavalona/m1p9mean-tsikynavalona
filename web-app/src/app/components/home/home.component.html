@@ -1,8 +1,8 @@
 <!-- <a class="nav-link" (click)="onLogoutClick()" href="#">Logout</a> -->
 
 <div class="main">
-  <h1 style="color:#fcd734">List of Restaurant</h1>
-  <ul class="cards">
+  <h1>List of Restaurant</h1>
+  <ul class="cards" style="margin-top:-50px">
     <li class="cards_item" *ngFor="let item of list_restaurant">
       <div class="card">
         <div style="margin:0" class="card_image">
@@ -11,12 +11,11 @@
         </div>
         <hr>
         <div  class="card_content">
-          <h2 class="card_title">{{ item.rName }}</h2>
           <p class="card_text">
-            {{ item.rDescription }}
+            <img src="../../assets/img/tag.png" class="mr-1" style="width:18px;height:18px;margin-right:10px">{{ item.rDescription }}
           </p>
           <p>
-            {{ item.rAdress }}
+            <img src="../../assets/img/placeholder.png" class="mr-1" style="width:18px;height:18px;margin-right:10px">{{ item.rAdress }}
           </p>
           <a style="text-decoration:none" routerLink="/list-food/{{ item._id }}">
             <button class="btn card_btn">show foods</button>

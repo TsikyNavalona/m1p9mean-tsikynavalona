@@ -1,4 +1,5 @@
 import { AfterViewInit,Component, OnInit ,ElementRef,HostListener,ViewChildren,QueryList,Injectable} from '@angular/core';
+import {Meta ,Title} from "@angular/platform-browser";
 import { NgxSpinnerService } from "ngx-spinner";
 import { fromEvent, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -68,6 +69,7 @@ onDocumentClick(event: MouseEvent) {
   }
 }
   constructor(
+    private titleService:Title,
     private elRef: ElementRef,
     private navBar :NavbarComponent,
     private customerService: CustomerService,
@@ -78,6 +80,7 @@ onDocumentClick(event: MouseEvent) {
     private foodService: FoodService,
     private shared: SharedService
   ) {
+    this.titleService.setTitle("E-kaly : List Food");
     this.quantitySrc = this.shared.quantitySource;
     this.totalAmountSrc = this.shared.amountTotalSource;
     this.totalBenefitSrc = this.shared.benefitTotalSource;

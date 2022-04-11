@@ -44,7 +44,7 @@ export class RestaurantAdminComponent implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private restaurantService: RestaurantService) {
-        this.titleService.setTitle("E-kaly : Restaurant Admin page");
+        this.titleService.setTitle("E-kaly : Restaurant Admin");
     }
 
   ngOnInit(): void {

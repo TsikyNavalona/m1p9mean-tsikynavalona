@@ -3,7 +3,7 @@
 <div class="main">
 
   <h1  *ngIf="restaurant">List of Food at <span style="color:#1abc9c"> {{ restaurant.rName }}</span>   </h1>
-  <ul class="cards">
+  <ul class="cards" style="margin-top:-50px">
     <li class="cards_item" *ngFor="let item of list_food_res; let i = index">
       <div class="card">
         <div  style="margin:0" class="card_image">
@@ -53,6 +53,7 @@
 
   <div  id="modalNotAccess" class="modal">
     <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);margin:auto" class="modal-content">
+      <img src="../../assets/img/warning.png" style="margin-left:15px;width:90px;height:90px;" alt="">
       <h1>Only the <span  style="color:#1abc9c">customer</span>  can buy food</h1>
     </div>
   </div>
@@ -84,6 +85,7 @@
 
   <div id="differentResto" class="modal">
     <div class="modal-content">
+      <img src="../../assets/img/warning.png" style="margin-left:15px;width:90px;height:90px;" alt="">
       <h1>Sorry , you can't order from two different restaurants</h1>
     </div>
   </div>

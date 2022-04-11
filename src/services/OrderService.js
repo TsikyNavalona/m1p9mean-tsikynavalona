@@ -1,6 +1,36 @@
 require("dotenv").config();
 
+//import EmailService from "EmailService";
+const nodemailer = require("nodemailer");
 import Order from "../models/order";
+
+
+function mailSending(subject , text){
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth:{
+      user:"ekaly.tsiky@gmail.com",
+      pass:"ekaly0606!"
+    },
+    tls:{
+      rejectUnauthorized: false
+    }
+  })
+
+  let mailOptions = {
+    from :"ekaly.tsiky@gmail.com",
+    to :"ekaly.tsiky@gmail.com",
+    subject :subject,
+    text :text
+  }
+  transporter.sendMail(mailOptions, function(err,success){
+    if(err){
+      console.log(err);
+    }else{
+       console.log("email send");
+    }
+  })
+}
 
 let showAllOrder = async (req, res) => {
   try {
@@ -106,7 +136,19 @@ let showAllPreparedOrder= async(req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
+let showAllDeliveredOrder= async(req, res) => {
+  try {
+    const order = await Order.find({status: "delivered"})
+      .populate("allFoodOrdered.oFood", "_id fName fImage fPrice fBenefit")
+      .populate("oRestaurant", "_id rName")
+      .populate("oCustomer", "_id cUsername cNumber cEmail cAdress")
+      .populate("oDeliverer", "_id dUsername dNumber dEmail")
+      .sort({ _id: -1 });
+    res.json({ status: "200", datas: order });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 let showSumOrder = async (req, res) => {
   try {
@@ -190,6 +232,12 @@ let updateOrderById = async (req, res, next) =>{
   }
   try {
     const updatedOrder = await order.save();
+    if(updatedOrder.status==="prepared"){
+      mailSending("The food is ready to be delivered","Hello admin, the order with ID " +updatedOrder._id+ " is ready to be delivered!");
+    }
+    if(updatedOrder.status==="delivered"){
+      mailSending("The order is delivered","Hello admin, the order with ID " +updatedOrder._id+ " is delivered!");
+    }
     res.json({ status: "200", datas: updatedOrder });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -208,5 +256,6 @@ module.exports = {
   showAllOrderByDeliverer: showAllOrderByDeliverer,
   showAllOrderByRestaurantV2: showAllOrderByRestaurantV2,
   showAllPreparedOrder:showAllPreparedOrder,
+  showAllDeliveredOrder:showAllDeliveredOrder,
   updateOrderById:updateOrderById
 };

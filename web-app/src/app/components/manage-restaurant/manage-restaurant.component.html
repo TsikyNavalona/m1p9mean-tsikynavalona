@@ -1,1 +1,163 @@
-<p>manage-restaurant works!</p>
+
+<ngx-spinner
+  bdColor="rgba(255,255,255,0.97)"
+  template="<img src='../../assets/img/giphy.gif'  style='width:150px' />"
+  type="ball-8bits"
+>
+<p style="color: black;margin-top:60px;font-weight:bold;font-size:17px" > Loading... </p>
+</ngx-spinner>
+
+
+<img (click)="addFood()" style="width:30px;height:30px;display: inline;margin-left:6.5%" class="imgPlusMinus" src="../../assets/img/plus.png" alt="">
+
+<div *ngIf="restaurant" class="container-fluid py-4">
+  <div class="">
+    <div class="card mt-5 ml-5 pt-2 active pb-0 px-3">
+       <div class="card-body ">
+           <div class="row">
+               <div class="col-12 ">
+                   <h4 class="card-title" style="font-size: 1.9rem;color:#1abc9c;margin-left: 35px;"><b>{{ this.restaurant.rName }}</b></h4>
+               </div>
+               <hr>
+               <div class="col">
+                   <h6 class="card-subtitle mb-2 text-muted">
+                       <p class="card-text text-muted small " style="font-size: 1.0rem"> <img src="../../assets/img/tag.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> {{restaurant.rDescription}}</p>
+                   </h6>
+               </div>
+           </div>
+           <hr>
+           <div class="col">
+               <h6 class="card-subtitle mb-2 text-muted">
+                   <p class="card-text text-muted small " style="font-size: 1.0rem"> <img src="../../assets/img/phone.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> {{restaurant.rNumber}}</p>
+               </h6>
+           </div>
+           <hr>
+           <div class="col">
+               <h6 class="card-subtitle mb-2 text-muted">
+                   <p class="card-text text-muted small " style="font-size: 1.0rem"> <img src="../../assets/img/email.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> {{restaurant.rEmail}}</p>
+               </h6>
+           </div>
+           <hr>
+           <div class="col">
+               <h6 class="card-subtitle mb-2 text-muted">
+                   <p class="card-text text-muted small " style="font-size: 1.0rem"> <img src="../../assets/img/placeholder.png" class="mr-1 " width="19" height="19" id="star"> <span class="vl mr-2 ml-0"></span> {{restaurant.rAdress}}</p>
+               </h6>
+           </div>
+       </div>
+     </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+      <div class="card2">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of orders</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.list_order_restaurant.length}}
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/box.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+      <div class="card2">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of Amount</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.totalAmount| number: '.0' }} Ar
+                </h2>
+              </div>
+            </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                  <img src="../../assets/img/price.png" style="width:50px" alt="">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-6">
+      <div class="card2">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of Benefit</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.totalBenefit | number: '.0' }} Ar
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/analysis.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 style="text-align:center;margin-top:50px">List of Food :</h1>
+   <ul class="collection with-header" style="margin-top:50px;margin-bottom:50px" *ngFor = "let item of list_food_res">
+       <li class="collection-item"><h4 style="font-size: 1.3rem;color:#1abc9c;margin-top:13px">{{item.fName}}</h4></li>
+       <li class="collection-item">Description : {{item.fDescription}} </li>
+       <li class="collection-item">Price : {{item.fPrice| number: '.0' }} Ar</li>
+       <li class="collection-item">Benefit : {{item.fBenefit| number: '.0' }} Ar</li>
+   </ul>
+</div>
+
+
+  <div id="modalAddFood" class="modal">
+    <div class="modal-content">
+      <h1 style="margin-top:10px">Add new food :</h1>
+      <div class="screen-1" style="margin-top:25px">
+        <form   class="screen-1" (submit)="addFoodSubmit()">
+          <div class="email">
+            <label for="email">Name</label>
+            <div class="sec-2">
+              <input type="text"  [(ngModel)]="fName" name="fName" placeholder="Enter Food Name!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Description</label>
+            <div class="sec-2">
+              <input type="text"  [(ngModel)]="fDescription" name="fDescription" placeholder="Enter Food Description!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Price</label>
+            <div class="sec-2">
+              <input type="number"  [(ngModel)]="fPrice" name="fPrice" placeholder="Enter Food Price!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Benefit</label>
+            <div class="sec-2">
+              <input type="number"  [(ngModel)]="fBenefit" name="fBenefit" placeholder="Enter Food Benefit!" required/>
+            </div>
+          </div>
+          <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+          <input class="login" type="submit" value="Add">
+        </form>
+        </div>
+    </div>
+  </div>

@@ -1,4 +1,5 @@
 import { Component, ElementRef,OnInit, OnDestroy,AfterViewInit,HostListener } from '@angular/core';
+import {Meta ,Title} from "@angular/platform-browser";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ActivatedRoute,Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
@@ -9,7 +10,7 @@ import {fromEvent, Subscription,Subject} from 'rxjs';
   templateUrl: './order-deliverer.component.html',
   styleUrls: ['./order-deliverer.component.css']
 })
-export class OrderDelivererComponent implements AfterViewInit {
+export class OrderDelivererComponent implements OnInit {
 
   list_order_Prepared :any;
   list_order_By_Deliv :any;
@@ -29,15 +30,17 @@ export class OrderDelivererComponent implements AfterViewInit {
     }
   }
   constructor(
+    private titleService:Title,
     public elRef: ElementRef,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private router: Router) {
+      this.titleService.setTitle("E-kaly : Order Deliverer ");
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     const allParams = this.activatedRoute.snapshot.params;
     this.activatedRoute.paramMap.subscribe((x) => {
       let idDeliverer = x.get('id');
@@ -53,6 +56,7 @@ export class OrderDelivererComponent implements AfterViewInit {
         setTimeout(()=>{
           try {
             $('#example').DataTable({
+              "retrieve": true,
               "paging":   false,
               "info":     false,
               "language": {
@@ -82,6 +86,7 @@ export class OrderDelivererComponent implements AfterViewInit {
         setTimeout(()=>{
           try {
             $('#okok').DataTable({
+              "retrieve": true,
               "paging":   false,
               "info":     false,
               "language": {
@@ -132,7 +137,7 @@ export class OrderDelivererComponent implements AfterViewInit {
           //this.showAllOrderByDeliverer(deliverer.id);
 
         try {
-          //this.ngAfterViewInit();
+          this.ngOnInit();
           this.router.routeReuseStrategy.shouldReuseRoute = () => false;
           this.router.navigate(['/order-deliverer/'+deliverer.id],{
             relativeTo: this.activatedRoute

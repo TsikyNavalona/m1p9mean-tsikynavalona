@@ -1,4 +1,5 @@
 import { Component, ElementRef,OnInit, OnDestroy,AfterViewInit,HostListener } from '@angular/core';
+import {Meta ,Title} from "@angular/platform-browser";
 import { ActivatedRoute,Router } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import {fromEvent, Subscription,Subject} from 'rxjs';
@@ -26,10 +27,12 @@ export class OrderCustomerComponent implements AfterViewInit  {
       }
     }
   constructor(
+    private titleService:Title,
     public elRef: ElementRef,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+    this.titleService.setTitle("E-kaly : Order Customer "); }
 
   ngAfterViewInit(): void {
     const allParams = this.activatedRoute.snapshot.params;
