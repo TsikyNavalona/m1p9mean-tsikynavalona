@@ -126,6 +126,7 @@ let addOrder = async (req, res) => {
     oCustomer: req.body.oCustomer,
     oDeliverer: req.body.oDeliverer,
     oAmount: req.body.oAmount,
+    oBenefit: req.body.oBenefit,
     status: req.body.status,
   });
   try {

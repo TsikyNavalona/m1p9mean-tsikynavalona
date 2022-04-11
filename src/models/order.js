@@ -29,6 +29,10 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  oBenefit: {
+    type: Number,
+    required: true,
+  },
   status: {
     type: String,
     default: "not prepared",

@@ -56,7 +56,14 @@ export class OrderRestaurantComponent implements AfterViewInit {
 
         setTimeout(()=>{
           try {
-            $('#example').DataTable();
+            $('#example').DataTable({
+              "paging":   false,
+              "info":     false,
+              "language": {
+                "zeroRecords":    "",
+                "emptyTable":     "",
+              }
+            });
           } catch (error) {
           }
         },0);
@@ -78,7 +85,14 @@ export class OrderRestaurantComponent implements AfterViewInit {
 
         setTimeout(()=>{
           try {
-            $('#okok').DataTable();
+            $('#okok').DataTable({
+              "paging":   false,
+              "info":     false,
+              "language": {
+                "zeroRecords":    "",
+                "emptyTable":     "",
+              }
+            });
           } catch (error) {
           }
         },0);
@@ -118,6 +132,9 @@ export class OrderRestaurantComponent implements AfterViewInit {
       this.spinner.show();
       setTimeout(()=>{
           this.orderService.updateOrderById(idOrder,order).subscribe(onSuccess, onError);
+
+          //this.showAllOrderByRestaurantNP(restaurant.id);
+          //this.showAllOrderByRestaurantF(restaurant.id);
         try {
           //this.ngAfterViewInit();
           this.router.routeReuseStrategy.shouldReuseRoute = () => false;

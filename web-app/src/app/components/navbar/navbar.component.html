@@ -21,7 +21,7 @@
     </div>
   </a>
   <div class="search-icon">
-    
+
   </div>
   <div class="cancel-icon">
     <span class="fas fa-times"></span>
@@ -39,10 +39,10 @@
   <div style="float:right" class="nav-items">
     <li *ngIf="checkUserNotCustomer()&&checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showCart()" ><span class="nm-menu-cart-title">Cart</span><span style="position: relative;top: -7px;left:3px;display: inline-block;font-size: 14px;color: #1abc9c;" class="nm-menu-cart-count count nm-count-zero">{{ quantityValueSecond || quantityCard || 0}}</span></a></li>
     <li id="connectedId"><a style="cursor: pointer;" id="showChoiceLogin">Sign in </a></li>
-    <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
-    <li *ngIf="checkExistToken('restaurant')" ><a style="cursor: pointer;" id="showrestaurantMenu">{{data.rName}} </a></li>
-    <li *ngIf="checkExistToken('deliverer')" ><a style="cursor: pointer;" id="showdelivererMenu">{{data.dUsername}} </a></li>
-    <li *ngIf="checkExistToken('admin')" ><a style="cursor: pointer;" id="showadminMenu">{{data.aUsername}} </a></li>
+    <li *ngIf="checkExistToken('customer')" ><a style="cursor: pointer;" class="text-capitalize" (click)="showcustomerMenu()">{{data.cUsername}} </a></li>
+    <li *ngIf="checkExistToken('restaurant')" ><a style="cursor: pointer;"class="text-capitalize" id="showrestaurantMenu">{{data.rName}} </a></li>
+    <li *ngIf="checkExistToken('deliverer')" ><a style="cursor: pointer;"class="text-capitalize" id="showdelivererMenu">{{data.dUsername}} </a></li>
+    <li *ngIf="checkExistToken('admin')" ><a style="cursor: pointer;" class="text-capitalize"id="showadminMenu">{{data.aUsername}} </a></li>
   </div>
 </nav>
 <div style="margin-bottom: 25px;"></div>
@@ -54,13 +54,13 @@
       <p style="font-size:19px;color:#1abc9c" *ngIf="!listCardValueSecond" class=" col-5">{{item.fName}}</p>
       <p *ngIf="!listCardValueSecond" class=" col-3">Qty: {{item.quantity}}</p>
       <p *ngIf="!listCardValueSecond" class=" col-2">{{ item.fPrice*item.quantity | number: '.0' }} Ar</p>
-      <p *ngIf="!listCardValueSecond" (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice)" class=" col-2"><img src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
+      <p *ngIf="!listCardValueSecond" (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice,item.fBenefit)" class=" col-2"><img src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
     </div>
     <div class=" row"  style="width:100%;text-align:center;margin-top:25px" *ngFor="let item of listCardValueSecond; ">
       <p style="font-size:19px;color:#1abc9c" class="col-5">{{item.fName}}</p>
       <p class="col-3">Qty: {{item.quantity}}</p>
       <p class="col-2">{{ item.fPrice*item.quantity | number: '.0' }} Ar</p>
-      <p class=" col-2"><img (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice)" src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
+      <p class=" col-2"><img (click)="deleteItemOnCard(item.oFood,item.quantity,item.fPrice,item.fBenefit)" src="../../assets/img/delete.png" style="width:19px;margin-top:-8px;" alt=""></p>
     </div>
     <button (click)="valideOrder()" *ngIf="listCard || listCardValueSecond"  style="display: inline;margin-top:25px" class="btn card_btn">
       <p style="display: inline;;margin-right:48px;">Validate the order</p>
@@ -73,7 +73,6 @@
 
 <div id="modalLoginChoice" class="modal">
   <div class="modal-content">
-    <span style="cursor: pointer" class="closeLoginChoice">&times;</span>
     <h1>Sign in as :</h1>
     <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/nude.png" style="width:30px;margin-right:30px" alt=""><span >Customer</span></div></a>
     <a style="cursor: pointer;" id="showLogRestaur" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/restaurant.png" style="width:30px;margin-right:30px" alt=""><span>Restaurant</span></div></a><br>
@@ -252,9 +251,9 @@
 <div id="modalrestaurantMenu" class="modal">
   <div class="modal-content">
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Restaurant </span> menu :</h1>
-    <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice" style="width:230px"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Restaurant Info</span></div></a>
-    <a style="cursor: pointer;" (click)="onOrderRestaurantClick()" style="text-decoration: none;"><div class="linkChoice"style="width:230px"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
-    <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"style="width:230px"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onManageRestaurantClick()" style="text-decoration: none">  <div class="linkChoice" style="width:250px"> <img src="../../assets/img/dinner.png" style="width:30px;margin-right:30px" alt=""><span >Manage Restaurant</span></div></a>
+    <a style="cursor: pointer;" (click)="onOrderRestaurantClick()" style="text-decoration: none;"><div class="linkChoice"style="width:250px"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"style="width:250px"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>
 
@@ -273,6 +272,7 @@
       <h1 style="margin-top:10px"><span style="color:#1abc9c"> Admin </span> menu :</h1>
     <a style="cursor: pointer;" id="showLogCustomer" style="text-decoration: none">  <div class="linkChoice"> <img src="../../assets/img/profile.png" style="width:30px;margin-right:30px" alt=""><span >Profile</span></div></a>
     <a style="cursor: pointer;" (click)="onOrderAdminClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/price-list.png" style="width:30px;margin-right:30px" alt=""><span>Orders</span></div></a><br>
+    <a style="cursor: pointer;" (click)="onRestaurantAdminClick()"  style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/restaurant.png" style="width:30px;margin-right:30px" alt=""><span>Restaurant</span></div></a><br>
     <a style="cursor: pointer;" (click)="onLogoutClick()" style="text-decoration: none;"><div class="linkChoice"> <img src="../../assets/img/logout.png" style="width:30px;margin-right:30px" alt=""><span>Log out</span></div></a><br>
     </div>
 </div>

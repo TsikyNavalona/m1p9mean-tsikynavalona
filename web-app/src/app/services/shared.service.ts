@@ -58,6 +58,21 @@ export class SharedService {
   }
 
 
+  _benefitTotal: string ="";
+
+  _benefitTotalSource: Subject<string> = new Subject();
+
+  get benefitTotalSource(): Subject<string>{
+    return this._benefitTotalSource;
+  }
+
+  set benefitTotalSource(src: Subject<string>){
+    this._benefitTotalSource = src;
+  }
+
+  changeBenefitTotalSource(n : string){
+    this.benefitTotalSource.next(n);
+  }
 
     _listFinishedResto: any;
 

@@ -28,12 +28,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of list_order_restaurant_notP">
-              <td style="color:#1abc9c;cursor:pointer" (click)="detailOrder(item._id)">{{ item._id }}</td>
-              <td>{{ item.oCustomer.cUsername }}</td>
-              <td>{{ item.status }}</td>
-              <td>{{ item.oAmount | number: '.0'}}</td>
-              <td>{{ item.orderAt | date:"dd/MM/yyyy HH:mm"}}</td>
-              <td style="cursor:pointer" (click)="setToPrepared(item._id)"><img style="width:19px" src="../../assets/img/cooking.png" alt=""></td>
+              <td style="color:#1abc9c;cursor:pointer;border-style: none;" (click)="detailOrder(item._id)">{{ item._id }}</td>
+              <td style="border-style: none;">{{ item.oCustomer.cUsername }}</td>
+              <td style="border-style: none;">{{ item.status }}</td>
+              <td style="border-style: none;">{{ item.oAmount | number: '.0'}}</td>
+              <td style="border-style: none;">{{ item.orderAt | date:"dd/MM/yyyy HH:mm"}}</td>
+              <td style="cursor:pointer;border-style: none" (click)="setToPrepared(item._id)"><img style="width:19px" src="../../assets/img/cooking.png" alt=""></td>
           </tr>
         </tbody>
       </table>
@@ -55,11 +55,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of list_order_restaurant_F">
-              <td style="color:#1abc9c;cursor:pointer" (click)="detailOrder(item._id)">{{ item._id }}</td>
-              <td>{{ item.oCustomer.cUsername }}</td>
-              <td>{{ item.status }}</td>
-              <td>{{ item.oAmount | number: '.0'}}</td>
-              <td>{{ item.orderAt | date:"dd/MM/yyyy HH:mm"}}</td>
+              <td style="color:#1abc9c;cursor:pointer;border-style: none;" (click)="detailOrder(item._id)">{{ item._id }}</td>
+              <td style="border-style: none;">{{ item.oCustomer.cUsername }}</td>
+              <td style="border-style: none;">{{ item.status }}</td>
+              <td style="border-style: none;">{{ item.oAmount | number: '.0'}}</td>
+              <td style="border-style: none;">{{ item.orderAt | date:"dd/MM/yyyy HH:mm"}}</td>
           </tr>
         </tbody>
       </table>

@@ -28,6 +28,7 @@
     "datatables.net-dt": "^1.11.3",
     "flash-messages-angular": "^4.0.1",
     "jquery": "^3.6.0",
+    "linq": "^4.0.0",
     "ngx-spinner": "^13.1.1",
     "rxjs": "~7.5.0",
     "rxjs-compat": "^6.6.7",

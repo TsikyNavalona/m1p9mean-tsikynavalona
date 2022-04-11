@@ -27,6 +27,9 @@ export class NavbarComponent implements  AfterViewInit {
   totalAmountSrc :Subject<string>;
   public totalAmountValueSecond: string ="";
 
+  totalBenefitSrc :Subject<string>;
+  public totalBenefitValueSecond: string ="";
+
   usernameCustLog: string = '';
   passwordCustLog: string = '';
   idCustomer : string ='';
@@ -54,6 +57,7 @@ export class NavbarComponent implements  AfterViewInit {
   quantityCard :string ='';
   listCard : any;
   totalAmount :string ="";
+  totalBenefit :string = "";
 
   listIdFood :string[] = [];
   listCardWName :any
@@ -87,6 +91,11 @@ export class NavbarComponent implements  AfterViewInit {
       this.totalAmountValueSecond = value;
     });
 
+    this.totalBenefitSrc = this.shared.benefitTotalSource;
+
+    this.totalBenefitSrc.subscribe(value => {
+      this.totalBenefitValueSecond = value;
+    })
 
     this.listCardSrc = this.shared.listCardSource;
 
@@ -158,6 +167,7 @@ export class NavbarComponent implements  AfterViewInit {
     setTimeout(()=>{
       this.quantityCard = localStorage.getItem("TotalQuantityCart")  || "";
       this.totalAmount = localStorage.getItem("AmountTotal") || "";
+      this.totalBenefit = localStorage.getItem("BenefitTotal") || "";
     }
     ,0);
     if(localStorage.getItem("admin")  || localStorage.getItem("restaurant") || localStorage.getItem("deliverer")){
@@ -176,7 +186,6 @@ export class NavbarComponent implements  AfterViewInit {
 
     var modalLoginChoice = this.elRef.nativeElement.querySelector('#modalLoginChoice');
     var showChoiceLogin = this.elRef.nativeElement.querySelector('#showChoiceLogin');
-    var closeLoginChoice = this.elRef.nativeElement.querySelector('.closeLoginChoice');
 
     var modalLogCustomer =this.elRef.nativeElement.querySelector('#modalLogCustomer');
     var showLogCustomer = this.elRef.nativeElement.querySelector('#showLogCustomer');
@@ -229,10 +238,6 @@ export class NavbarComponent implements  AfterViewInit {
       cancel.classList.remove('show');
       form.classList.remove('active');
       cancel.style.color = '#ff3d00';
-    });
-
-    this.clickedElement = fromEvent(closeLoginChoice, 'click').subscribe(() => {
-      modalLoginChoice.style.display = "none";
     });
 
     this.clickedElement = fromEvent(showLogCustomer, 'click').subscribe(() => {
@@ -428,6 +433,8 @@ export class NavbarComponent implements  AfterViewInit {
 
   onLogoutClick() {
     this.shared.changeQuantity("");
+    this.shared.changeAmountTotalSource("");
+    this.shared.changeBenefitTotalSource("");
     this.shared.changeCardSource(null);
     this.spinner.show();
     setTimeout(() => {
@@ -505,11 +512,13 @@ export class NavbarComponent implements  AfterViewInit {
     }
 
   }
-  deleteItemOnCard(oFood:string,quantity:number,price:number){
+  deleteItemOnCard(oFood:string,quantity:number,price:number,benefit:number){
 
     var totalOrder = price*quantity;
+    var totalBenefit = benefit*quantity;
     var oldQuantity = parseInt(localStorage.getItem("TotalQuantityCart") || "") ;
     var oldAmountTotal = parseInt(localStorage.getItem("AmountTotal") || "") ;
+    var oldBenefitTotal = parseInt(localStorage.getItem("BenefitTotal") || "") ;
     //console.log(this.listCard);
     let actualListCard :any;
     if(this.listCardValueSecond){
@@ -528,31 +537,39 @@ export class NavbarComponent implements  AfterViewInit {
 
       localStorage.setItem('TotalQuantityCart',String(oldQuantity-quantity) );
       localStorage.setItem('AmountTotal',String(oldAmountTotal-totalOrder));
+      localStorage.setItem('BenefitTotal',String(oldBenefitTotal-totalBenefit));
       localStorage.setItem('cardFood',JSON.stringify(actualListCard));
       this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
       this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+      this.shared.changeBenefitTotalSource(localStorage.getItem("BenefitTotal")  || "");
       this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
 
     if(localStorage.getItem("TotalQuantityCart") && localStorage.getItem("TotalQuantityCart") ==="0"){
       this.listCard=null;
       this.quantityCard="";
       this.totalAmount="";
+      this.totalBenefit =""
       localStorage.removeItem('cardFood');
       localStorage.removeItem('TotalQuantityCart');
       localStorage.removeItem('AmountTotal');
+      localStorage.removeItem('BenefitTotal');
       this.shared.changeQuantity("");
       this.shared.changeAmountTotalSource("");
+      this.shared.changeBenefitTotalSource("");
       this.shared.changeCardSource(null );
     }
   }
   valideOrder(){
     let actualUser = JSON.parse(localStorage.getItem("customer") || "")  ;
     let amount = "";
+    let benefit = ""
     let restaurantId ="";
     if(this.totalAmountValueSecond){
       amount=this.totalAmountValueSecond;
+      benefit = this.totalBenefitValueSecond;
     }else{
       amount=this.totalAmount;
+      benefit = this.totalBenefit;
     }
 
     let actualListCard :any;
@@ -568,7 +585,8 @@ export class NavbarComponent implements  AfterViewInit {
       allFoodOrdered: actualListCard,
       oRestaurant: restaurantId,
       oCustomer:actualUser.id,
-      oAmount:amount
+      oAmount:amount,
+      oBenefit:benefit
     };
     console.log(order);
 
@@ -579,11 +597,14 @@ export class NavbarComponent implements  AfterViewInit {
         this.listCard=null;
         this.quantityCard="";
         this.totalAmount="";
+        this.totalBenefit=""
         localStorage.removeItem('cardFood');
         localStorage.removeItem('TotalQuantityCart');
         localStorage.removeItem('AmountTotal');
+        localStorage.removeItem('BenefitTotal');
         this.shared.changeQuantity("");
         this.shared.changeAmountTotalSource("");
+        this.shared.changeBenefitTotalSource("");
         this.shared.changeCardSource(null );
         this.spinner.show();
         this.error_msg = "";
@@ -620,6 +641,20 @@ export class NavbarComponent implements  AfterViewInit {
     this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
     if(admin){
       this.router.navigate(['/order-admin/'+admin.id]);
+    }
+  }
+  onRestaurantAdminClick(){
+    let admin = JSON.parse(localStorage.getItem("admin") || "" );
+    this.elRef.nativeElement.querySelector('#modaladminMenu').style.display = "none";
+    if(admin){
+      this.router.navigate(['/restaurant-admin/'+admin.id]);
+    }
+  }
+  onManageRestaurantClick(){
+    let restaurant = JSON.parse(localStorage.getItem("restaurant") || "" );
+    this.elRef.nativeElement.querySelector('#modalrestaurantMenu').style.display = "none";
+    if(restaurant){
+      this.router.navigate(['/manage-restaurant/'+restaurant.id]);
     }
   }
 }

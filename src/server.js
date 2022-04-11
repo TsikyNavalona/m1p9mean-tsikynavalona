@@ -9,6 +9,7 @@ import session from "express-session";
 const config = require("./config/database");
 import initWebRoutes from "./routes/web";
 import Customer from "./models/customer";
+import Order from "./models/order";
 
 let app = express();
 
@@ -34,7 +35,7 @@ mongoose.connect(config.database, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
-
+//Order.collection.drop();
 require("./config/passport")(passport);
 
 app.use(express.static(path.join(__dirname, "public")));

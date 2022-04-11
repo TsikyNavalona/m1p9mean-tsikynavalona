@@ -52,6 +52,7 @@ export class CustomerService {
     localStorage.removeItem('cardFood');
     localStorage.removeItem('TotalQuantityCart');
     localStorage.removeItem('AmountTotal');
+    localStorage.removeItem('BenefitTotal');
   }
   isTokExpired() {
     const jwtHelper = new JwtHelperService();

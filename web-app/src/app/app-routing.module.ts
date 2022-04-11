@@ -10,6 +10,8 @@ import { OrderCustomerComponent } from './components/order-customer/order-custom
 import { OrderRestaurantComponent } from './components/order-restaurant/order-restaurant.component';
 import { OrderDelivererComponent } from './components/order-deliverer/order-deliverer.component';
 import { OrderAdminComponent } from './components/order-admin/order-admin.component';
+import { RestaurantAdminComponent } from './components/restaurant-admin/restaurant-admin.component';
+import { ManageRestaurantComponent } from './components/manage-restaurant/manage-restaurant.component';
 
 import { AuthGuard } from './config/auth.guard';
 import { AuthRestoGuard } from './config/authResto.guard';
@@ -62,7 +64,16 @@ const routes: Routes = [
     component: OrderAdminComponent,
     canActivate: [AuthAdminGuard],
   },
-
+  {
+    path: 'restaurant-admin/:id',
+    component: RestaurantAdminComponent,
+    canActivate: [AuthAdminGuard],
+  },
+  {
+    path: 'manage-restaurant/:id',
+    component: ManageRestaurantComponent,
+    canActivate: [AuthRestoGuard],
+  },
 ];
 
 @NgModule({

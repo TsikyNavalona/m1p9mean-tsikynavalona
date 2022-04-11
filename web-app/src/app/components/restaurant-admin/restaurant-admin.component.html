@@ -1,0 +1,212 @@
+
+<ngx-spinner
+  bdColor="rgba(255,255,255,0.97)"
+  template="<img src='../../assets/img/giphy.gif'  style='width:150px' />"
+  type="ball-8bits"
+>
+<p style="color: black;margin-top:60px;font-weight:bold;font-size:17px" > Loading... </p>
+</ngx-spinner>
+
+<img (click)="registerRestaurant()" style="width:30px;height:30px;display: inline;margin-left:6.5%" class="imgPlusMinus" src="../../assets/img/plus.png" alt="">
+
+<div class="container-fluid py-4">
+  <h1 style="text-align:center">Restaurant Admin:</h1>
+  <div class="row mt-5">
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of restaurants</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{list_restaurant.length}}
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/dinner.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of orders</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.list_order.length}}
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/box.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of Amount</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.totalAmount| number: '.0' }} Ar
+                </h2>
+              </div>
+            </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                  <img src="../../assets/img/price.png" style="width:50px" alt="">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-sm-6">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total of Benefit</p>
+                <h2 class="font-weight-bolder mb-0" style="color:#1abc9c">
+                  {{this.totalBenefit | number: '.0' }} Ar
+                </h2>
+              </div>
+            </div>
+            <div class="col-4 text-end">
+              <div class="icon icon-shape bg-gradient-primary  text-center border-radius-md">
+                <img src="../../assets/img/analysis.png" style="width:50px" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <h1 style="text-align:center;margin-top:50px">List of Restaurant</h1>
+    <div class="table-responsive" style="margin-bottom:50px;">
+      <table class="table table-width table-condensed" style="align-items:center;background-color:white">
+        <thead>
+          <tr style="color:#1abc9c;text-align:center">
+            <th>Restaurant Name</th>
+            <th>Email</th>
+            <th>Adress</th>
+            <th>Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align:center" *ngFor="let item of list_restaurant">
+            <td>{{item.rName}}</td>
+            <td>{{item.rEmail}}</td>
+            <td>{{item.rAdress}}</td>
+            <td>{{item.rNumber}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <h1 style="text-align:center;margin-top:50px">Amount per Restaurant</h1>
+  <div class="table-responsive" style="margin-bottom:50px;">
+    <table class="table table-width table-condensed" style="align-items:center;background-color:white">
+      <thead>
+        <tr style="color:#1abc9c;text-align:center">
+          <th>Resturant Name</th>
+          <th>Amount (Ar)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align:center" *ngFor="let item of list_Amount_per_Restaurant">
+          <td>{{item.oRestaurant.rName}}</td>
+          <td>{{item.oAmount| number: '.0'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <h1 style="text-align:center;margin-top:50px">Benefit per Restaurant</h1>
+  <div class="table-responsive" style="margin-bottom:50px;">
+    <table class="table table-width table-condensed" style="align-items:center;background-color:white">
+      <thead>
+        <tr style="color:#1abc9c;text-align:center">
+          <th>Resturant Name</th>
+          <th>Benefit (Ar)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align:center" *ngFor="let item of list_Benefit_per_Restaurant">
+          <td>{{item.oRestaurant.rName}}</td>
+          <td>{{item.oBenefit| number: '.0'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="modalRegisterRestaurant" class="modal">
+    <div class="modal-content">
+      <h1 style="margin-top:10px">Create new <span style="color:#1abc9c"> Restaurant </span> :</h1>
+      <div class="screen-1" style="margin-top:25px">
+        <form   class="screen-1" (submit)="RegisterRestaurantSubmit()">
+          <div class="email">
+            <label for="email">Name</label>
+            <div class="sec-2">
+              <input type="text"  [(ngModel)]="rName" name="rName" placeholder="Enter Restaurant Name!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Description</label>
+            <div class="sec-2">
+              <input type="email"  [(ngModel)]="rDescription" name="rDescription" placeholder="Enter Restaurant Description!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Email</label>
+            <div class="sec-2">
+              <input type="email"  [(ngModel)]="rEmail" name="rEmail" placeholder="Enter Restaurant Email!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Phone number</label>
+            <div class="sec-2">
+              <input type="tel"  [(ngModel)]="rNumber" name="rNumber" placeholder="Enter Restaurant Number!" required/>
+            </div>
+          </div>
+
+          <div class="email" style="margin-top:6px">
+            <label for="email">Adress</label>
+            <div class="sec-2">
+              <input  type="text"  [(ngModel)]="rAdress" name="rAdress"  placeholder="Enter Restaurant Adress!" required/>
+            </div>
+          </div>
+
+          <div class="password" style="margin-top:6px">
+            <label for="password">Password</label>
+            <div class="sec-2">
+              <input class="pas" type="password"   [(ngModel)]="rPassword" name="rPassword" placeholder="Enter Restaurant Password!" required/>
+            </div>
+          </div>
+          <b style="color:red;margin-right : 35px">{{ error_msg }}</b><br>
+          <input class="login" type="submit" value="Register">
+        </form>
+        </div>
+    </div>
+  </div>

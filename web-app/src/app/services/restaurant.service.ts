@@ -14,7 +14,13 @@ export class RestaurantService {
   showAllRestaurant() {
     return this.http.get(base_url + 'showAllRestaurant');
   }
-
+  newRestaurant(restaurant: any) {
+    let httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'application/json');
+    return this.http.post(base_url + 'addRestaurant', restaurant, {
+      headers: httpHeaders,
+    });
+  }
     showRestaurantById(id:any) {
       return this.http.get(base_url + 'showRestaurantById/' +id);
     }

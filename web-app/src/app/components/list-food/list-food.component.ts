@@ -23,6 +23,7 @@ export class ListFoodComponent implements AfterViewInit {
   quantitySrc: Subject<string>;
   listCardSrc: Subject<any>;
   totalAmountSrc: Subject<string>;
+  totalBenefitSrc: Subject<string>;
 
   idRestaurant = '';
   restaurant: any;
@@ -79,6 +80,7 @@ onDocumentClick(event: MouseEvent) {
   ) {
     this.quantitySrc = this.shared.quantitySource;
     this.totalAmountSrc = this.shared.amountTotalSource;
+    this.totalBenefitSrc = this.shared.benefitTotalSource;
     this.listCardSrc = this.shared.listCardSource;
   }
 
@@ -169,24 +171,29 @@ onDocumentClick(event: MouseEvent) {
       this.quantity=this.i;
     }
   }
-  addFoodToCard(idFood:string,priceFood:any,quantity:number,fName:string,restaurantId:string){
+  addFoodToCard(idFood:string,priceFood:any,quantity:number,fName:string,restaurantId:string,benefitFood:any){
 
-    var newOrder = '{"oFood" :"'+idFood+'", "quantity" :"'+quantity+'" , "fName":"'+fName+'" , "fPrice":"'+priceFood+'" , "idRestaurant":"'+restaurantId+'"}'
+    var newOrder = '{"oFood" :"'+idFood+'", "quantity" :"'+quantity+'" , "fName":"'+fName+'" , "fPrice":"'+priceFood+'" , "idRestaurant":"'+restaurantId+'" , "fBenefit" :"'+benefitFood+'"}'
     var totalOrder = priceFood*quantity;
+    var benefitOrder = benefitFood*quantity;
     if(!localStorage.getItem("cardFood")){
       localStorage.setItem('TotalQuantityCart',String(quantity));
       localStorage.setItem('AmountTotal',String(totalOrder));
+      localStorage.setItem('BenefitTotal',String(benefitOrder));
       localStorage.setItem('cardFood', "["+newOrder+"]");
       this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
       this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+      this.shared.changeBenefitTotalSource(localStorage.getItem("BenefitTotal")  || "")
       this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
     }else{
       var oldQuantity = parseInt(localStorage.getItem("TotalQuantityCart") || "") ;
       var oldAmountTotal = parseInt(localStorage.getItem("AmountTotal") || "") ;
+      var oldBenefitTotal = parseInt(localStorage.getItem("BenefitTotal") || "") ;
       var oldOrder = localStorage.getItem("cardFood");
       if(oldOrder && oldOrder.includes(restaurantId)){
         localStorage.setItem('TotalQuantityCart',String(oldQuantity+quantity) );
         localStorage.setItem('AmountTotal',String(oldAmountTotal+totalOrder));
+        localStorage.setItem('BenefitTotal',String(oldBenefitTotal+benefitOrder));
         var array =JSON.parse(localStorage.getItem("cardFood")|| "") ;
         if(oldOrder && oldOrder.includes(idFood)){
           for (var i = 0; i < array.length; i++) {
@@ -207,6 +214,7 @@ onDocumentClick(event: MouseEvent) {
 
         this.shared.changeQuantity(localStorage.getItem("TotalQuantityCart")  || "");
         this.shared.changeAmountTotalSource(localStorage.getItem("AmountTotal")  || "");
+        this.shared.changeBenefitTotalSource(localStorage.getItem("BenefitTotal")  || "")
         this.shared.changeCardSource(JSON.parse(localStorage.getItem("cardFood")||"") );
       }
       if(oldOrder && !oldOrder.includes(restaurantId)){
